@@ -937,7 +937,7 @@ claude</code></pre>
       </div>
     </section>
     <section id="ch7" class="chapter">
-      <h2>7 · 扩展能力：MCP 与 Skills</h2>
+      <h2>7 · MCP 与 Skills</h2>
 
       <p class="why"><strong>为什么要学这个：</strong>到现在，你用的是 Claude Code 自带的那一套工具——读文件、改文件、跑命令。这已经很强了。但假如你想让它读你的 Google 日历、连上某个数据库、或者把你常用的一套整理流程封装成一个命令随时调——那就需要"插件"了。这一章介绍两种扩展机制：<span class="term">MCP</span>（接外部系统的标准插头）和<span class="term">Skills</span>（把专长/流程打包成工具）。这章故意做得很轻——你不需要现在就用，只要知道"这东西存在、需要时可以加"就够了。</p>
 
@@ -963,7 +963,7 @@ claude</code></pre>
         <p class="box-title">小结</p>
         <ul>
           <li><strong>MCP</strong>：AI 的 USB-C 接口——统一规格，让 Claude 连上任意外部系统（文件、数据库、日历……）。</li>
-          <li><strong>Skills</strong>：把重复用的指令/流程打包成一个可随时调用的「专长」，放进 <code>.claude/skills/</code>。</li>
+          <li><strong>Skills</strong>：把重复用的指令/流程打包成一个可随时调用的「专长」，放在项目的 <code>.claude/</code> 目录里。</li>
           <li><strong>Subagents</strong>：专门处理侧任务的子智能体，跑在独立上下文里，只汇报结果。</li>
           <li><strong>Hooks</strong>：在 Claude Code 的特定节点自动触发的脚本，用来自动化和把关。</li>
         </ul>
