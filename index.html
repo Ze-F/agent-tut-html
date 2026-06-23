@@ -112,7 +112,94 @@
         <p><strong>一句话回顾：</strong>AI 是你那个超聪明的实习生，心法就是「交代清楚 → 让它做 → 你验收 → 让它改」；技巧会过时，这套心法不会。</p>
       </div>
     </section>
-    <section id="ch1" class="chapter"><h2>1 · 两种界面各管什么</h2></section>
+    <section id="ch1" class="chapter">
+      <h2>1 · 两种界面各管什么</h2>
+
+      <p class="why"><strong>为什么要学这个：</strong>你已经知道 LLM 是"大脑"、agent 是"大脑＋手脚"——但具体在哪里用哪个？打开 claude.ai 对话窗口就够了，还是非得进命令行不可？这一章把两种界面说清楚，给你一个能真正用的决策框架：用完即走找网页，想沉淀、想碰文件，进命令行。搞清楚这个，你后面不会白走弯路。</p>
+
+      <h3>先尝一口甜头：在网页里整理一段笔记</h3>
+      <p>先别管界面怎么选，直接动手试一次——用 <span class="term">claude.ai</span>（Anthropic 官方的网页 / 桌面 App）整理你的 Physics 课堂笔记。不需要装任何东西，打开浏览器就能做。</p>
+
+      <div class="box box-do">
+        <p class="box-title">🙌 跟我做 · 示例① 起点：整理一段 2026-week3 笔记</p>
+        <p>1. 在浏览器里打开 <strong>claude.ai</strong>，登录你的账号。</p>
+        <p>2. 开一个新对话，把下面这段话（换成你自己这周的笔记内容）贴进去：</p>
+        <pre><code>我是高中物理学生，下面是我 2026-week3 课堂的一段乱糟糟笔记，
+帮我整理成干净的中英双语 HTML 格式，要有标题、要点、公式用 &lt;em&gt; 标出。
+笔记：[把你的笔记粘在这里]</code></pre>
+        <p>3. 发送，看 Claude 产出整理好的 HTML。</p>
+        <p>4. 试着问它"把第一条要点再解释得通俗一点"，练一次修正（四步闭环的 ④）。</p>
+        <p><em>这就是主线示例①「课堂笔记 → 网页（HTML）→ 发布到 GitHub Pages」的第一脚——你已经拿到了 AI 整理的 HTML 片段。</em></p>
+      </div>
+
+      <p>感受到了吗？交代 context（给笔记）→ 产出（Claude 整理）→ eval 验收（你看一眼）→ 修正（再问一句），四步闭环转了一圈，一分钟内。</p>
+
+      <h3>撞墙：结果留不下来</h3>
+      <p>现在问题来了：那段整理好的 HTML 只存在这一个对话里。你关掉页面、下周再想用，得重新来过。更关键的是——<strong>它碰不到你电脑里的文件</strong>。你没法让 claude.ai 直接帮你把整理好的内容写进你桌面上的 <code>2026-week3.md</code>，更别说帮你建整个文件夹结构、或者一次处理十几周的笔记。</p>
+      <p>这不是 Bug，这就是 claude.ai 网页/App 的设计边界：它的产出存在<strong>对话里</strong>，不存在你的硬盘里。要让 AI 真正"动手"碰你的文件，需要给它一双真正的手脚——这就是为什么后面会学 <span class="term">Claude Code</span>（命令行 agent，官方说它"reads your codebase, edits files, and runs commands"）。</p>
+
+      <div class="box box-warn">
+        <p class="box-title">⚠️ 注意：claude.ai 网页 ≠ 帮你管文件</p>
+        <p>claude.ai 能接收你<strong>上传的文件</strong>（PDF、Word、图片等），但分析完了，结果只在对话里，<strong>不会自动回写到你硬盘</strong>。想让 AI 持续维护你本地的笔记文件夹？那件事是 Claude Code 的活儿，第 2–3 章再教。</p>
+      </div>
+
+      <h3>决策框架：什么时候用哪个</h3>
+      <p>两种界面各有优势，不是谁比谁好，而是场景不同。下面这张表帮你一眼看清楚：</p>
+
+      <table style="width:100%; border-collapse:collapse; margin:18px 0; font-size:15px">
+        <thead>
+          <tr style="background:var(--core-bg)">
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:50%">🌐 claude.ai 网页 / App 更适合</th>
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:50%">⌨️ Claude Code（CLI）更适合</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>Research（联网多步研究）</strong>：官方内置功能，让 Claude 自主搜索多个来源、逐步深挖，产出有引用的报告</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>任何你想长期维护的项目</strong>：本地文件夹 ＋ CLI ＋ 云盘 / GitHub 备份，才能沉淀下来</td>
+          </tr>
+          <tr style="background:var(--do-bg)">
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>Artifacts（实时可视化 / 交互页）</strong>：生成可互动的图表、迷你网页、React 组件；用完即分享</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>碰真实文件 / 跨会话 / 批量处理</strong>：读写你硬盘里的文件，比如一次整理 10 周的 <code>2026-week3.md</code></td>
+          </tr>
+          <tr>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>用完即走的轻量探索</strong>：临时查个东西、头脑风暴、整理一段笔记——不需要保留的一次性任务</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>本地可视化</strong>：让 agent 写 Python 脚本或 HTML 文件，跑完结果留在你机器上</td>
+          </tr>
+          <tr style="background:var(--do-bg)">
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>上传文件快速分析</strong>：PDF / Word / 图片，分析一次、得到答案，不需要持续维护</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>运行命令 / 自动化流程</strong>：比如自动把整理好的笔记发布到 GitHub Pages</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="box box-core">
+        <p class="box-title">🧠 一句话原则</p>
+        <p><strong>用完即走的探索 → 网页 / App；要沉淀 / 要维护 / 要碰文件 → 本地 ＋ CLI ＋ 备份。</strong></p>
+        <p>记不住表没关系，记住这句话，在每次启动 AI 之前先问自己："这件事做完就完了，还是我以后还要改？" 答案给了，界面也给了。</p>
+      </div>
+
+      <h3>延伸：可视化不一定非要在线</h3>
+      <p>可能你想"网页端的 <span class="term">Artifacts（实时可视化产物）</span>看起来挺酷的，本地能不能做？"能——让 Claude Code 帮你写一个 Python 脚本（比如用 Matplotlib 画图）或者一个 HTML 文件，跑出来的图和页面就存在你机器上，随时能改。本地可视化路线好处是：产物是<strong>你的文件</strong>，纳入版本控制、改了就是改了，不依赖任何在线服务。</p>
+
+      <h3>心法在两种界面下完全一致</h3>
+      <div class="box box-core">
+        <p class="box-title">🧠 心法回扣 · 换了界面，心法不换</p>
+        <p>无论你在 claude.ai 网页里整理笔记，还是在终端里让 Claude Code 帮你批量处理文件——<strong>四步闭环不变</strong>：交代清楚 context → 让它产出 → 你来 eval 验收 → 给反馈修正。</p>
+        <p>界面是工具，心法才是本事。工具换了心法还在，你永远是那个清醒的验收者。</p>
+      </div>
+
+      <div class="box box-summary">
+        <p class="box-title">小结</p>
+        <ul>
+          <li>claude.ai <strong>网页 / App</strong> 适合"用完即走"的任务：联网研究（<strong>Research</strong>）、交互可视化（<strong>Artifacts</strong>）、轻量一次性探索。</li>
+          <li><strong>Claude Code（CLI）</strong> 适合一切"想留下来"的工作：读写本地文件、跨会话维护项目、批量处理、自动发布。</li>
+          <li>撞墙点只有一个：<strong>claude.ai 不帮你改硬盘上的文件</strong>——想让 AI 动手维护你的文件夹，得用 CLI。</li>
+          <li>心法不因界面而变：<strong>四步闭环在哪里都管用</strong>，你永远是那个说了算的验收者。</li>
+        </ul>
+        <p><strong>一句话回顾：</strong>用完即走找网页，要沉淀、要碰文件就进命令行——下一章我们就去认识那个命令行。</p>
+      </div>
+    </section>
     <section id="ch2" class="chapter"><h2>2 · terminal 与文件系统</h2></section>
     <section id="ch3" class="chapter"><h2>3 · 上手 Claude Code</h2></section>
     <section id="ch4" class="chapter"><h2>4 · 把心法用熟</h2></section>
