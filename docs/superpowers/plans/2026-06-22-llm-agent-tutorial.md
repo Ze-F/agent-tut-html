@@ -31,6 +31,11 @@
   - ① **课堂笔记 → 网页（HTML）→ 发布到 GitHub Pages**（"网页"与"HTML"成对出现，发布平台一律叫 GitHub Pages）
   - ② **第二大脑（second brain）：用 Obsidian + Claude 共建知识库**
   - ③ **机械工程（mechanical engineering）兴趣拓展**
+- **界面三层进阶模型（全篇统一用这套，2026-06-23 核实）：** 这是本笔记的界面主线，所有章节按这三层定位，不得退回"网页 vs CLI"二元。
+  - **第 1 层 · claude.ai 网页 / App**：用完即走的探索——联网研究（Research）、交互可视化（Artifacts）、轻量问答。**碰不到你的本地文件。**
+  - **第 2 层 · Claude Cowork**：跑在 Claude 桌面 App 里的 agent，**零 terminal、不用写代码，却能直接读写你本地的文件 / 文件夹**；用的是和 Claude Code 同一套 agentic 引擎。是非技术者"让 agent 动我的文件"最丝滑的入门。（付费档可用；具体访问 / 成本 / 平台以 Ch1/Ch3 research 核实为准。）
+  - **第 3 层 · Claude Code（CLI）**：terminal 里的 agent，**完全掌控、可跑命令、可编程、可长期维护项目、可发布上线**。要碰 git/GitHub Pages、批量自动化、把进度沉淀成可维护工程时，毕业到这一层。
+  - **定位口径**：Cowork 不取代 Claude Code，而是它的"无 terminal 入门版"；terminal 与 Claude Code 仍是完整教学目标（是受众明确想学的），定位成"毕业到更强、更可控的一层"。
 - **学科载体：** 用他真实在学的科目 **Physics（物理）** 作为"课堂笔记"示例载体（与机械工程兴趣呼应；如你另有偏好可在执行前替换本行）。
 - **主 workspace 文件夹：** `~/study/physics-notes/`
 - **当天原始笔记文件：** `~/study/physics-notes/raw/2026-week3.md`
@@ -282,22 +287,24 @@ git commit -m "feat: scaffold static single-page site + design system + check sc
 
 ---
 
-## Task 3: 第 1 章 · 两种界面各管什么（网页/App vs CLI）
+## Task 3: 第 1 章 · 三层界面各管什么（网页 → Cowork → Claude Code）
 
 **Files:** Create `docs/research/01-interfaces.md`；Modify `index.html`（`#ch1`）
 
-**Research 清单（重点核实，名称/形态易变）：**
-- claude.ai 网页/桌面 App 当前真实功能名与形态：Deep Research（确认官方名称与是否可用）、Artifacts（实时可视化/交互页面）、文件上传等——以 Anthropic 官方说明为准。
-- Claude Code 作为本地 CLI agent 能"碰文件/跑命令"的官方定位表述。
+**Research 清单（重点核实，名称/形态易变；关键名必须 WebFetch 一手官方页）：**
+- claude.ai 网页/桌面 App 当前真实功能名与形态：Research（确认官方名——注意官方现称 "Research" 而非 "Deep Research"）、Artifacts（实时可视化/交互页面）。
+- **Claude Cowork**：核实它是什么、当前能力（桌面 App 内、零 terminal、读写本地文件/文件夹、与 Claude Code 同引擎）、当前可用平台与访问/付费门槛（以 anthropic.com / support.claude.com 官方页为准，标查证日期）。
+- Claude Code 作为 CLI agent 能"碰文件/跑命令/可编程/可发布"的官方定位表述。
 - GitHub / 云盘作为备份的通用做法（无需深入，第 5 章再展开 Pages）。
 
 **该章 section 必含要素：**
 - 章首 why。
 - 用网页/App 整理一段课堂笔记的"立刻尝甜头"演示（主线示例①起点，无需 terminal）。
-- 撞墙转折：产出留不下、碰不到本地文件。
-- **决策框架**（用表或两列盒）：网页/App 更优 vs CLI 更优 的场景；本地可视化可用 Python/HTML。
-- 一句话原则盒：用完即走→网页；要沉淀/维护/碰文件→本地+CLI+备份。
-- 🧠 心法回扣（无论哪种界面，心法一致）。
+- 撞墙转折：网页产出留不下、碰不到本地文件 → 引出能碰文件的 agent。
+- **界面三层进阶模型**（按 Canon 的"界面三层进阶模型"讲，用表或三列/三段）：第 1 层 网页/App（Research、Artifacts、用完即走）→ 第 2 层 Cowork（零 terminal 碰本地文件，最丝滑入门）→ 第 3 层 Claude Code CLI（完全掌控、可编程、可维护、可发布）。讲清每层"何时够用、何时该往上走"。
+- 本地可视化可让 agent 写 Python / HTML（属第 2/3 层能力）。
+- 一句话原则盒：用完即走的探索→网页；想让 agent 动本地文件又怕命令行→Cowork；要长期维护/发布/完全掌控→Claude Code + 备份。
+- 🧠 心法回扣（三层界面下，心法一致：交代清楚 + 验收）。
 - 小结 + 一句话回顾。
 
 ---
@@ -312,7 +319,7 @@ git commit -m "feat: scaffold static single-page site + design system + check sc
 - macOS Terminal.app 与 Homebrew 当前安装方式（核实 brew.sh 官方安装命令，不得凭记忆）。
 
 **该章 section 必含要素：**
-- 章首 why（为什么 agent 偏爱命令行）。
+- 章首 why（为什么要学命令行：Cowork 能让你零 terminal 起步，但要毕业到第 3 层 Claude Code——完全掌控、可编程、可发布——就得懂 terminal；懂它也帮你看明白 agent 在干什么）。
 - 命令行 vs 图形界面的生活化类比。
 - 路径与 `~ . ..` 讲解。
 - 每个命令一个 🙌 跟我做（命令 + 预期输出），以文件浏览为主。
@@ -333,10 +340,10 @@ git commit -m "feat: scaffold static single-page site + design system + check sc
 - "harness = 模型的工作台"概念的官方/权威表述。
 
 **该章 section 必含要素：**
-- 章首 why。
-- harness 概念 + 工作台类比。
+- 章首 why（毕业到界面第 3 层：从 Cowork 的"零 terminal 碰文件"走到 Claude Code 的"完全掌控 / 可编程 / 可发布"）。
+- harness 概念 + 工作台类比；一句话点出 Cowork 与 Claude Code 同引擎、区别在"桌面 App 无 terminal" vs "CLI 完全掌控"。
 - 🙌 跟我做：安装 → 登录 → 进项目目录 → 第一次对话（命令来自 research）。
-- ⚠️ 成本/权限注意盒（含学生可行选项）。
+- ⚠️ 成本/权限注意盒（含学生可行选项；Cowork 与 Claude Code 的访问/付费关系以 research 为准）。
 - "读→想→动手→再读"循环图解（文字/CSS）。
 - 跑通主线示例①第一段：把课堂笔记放进一个 workspace 让它整理。
 - 🧠 心法回扣；小结 + 一句话回顾。
