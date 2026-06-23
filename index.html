@@ -590,7 +590,8 @@ claude</code></pre>
         <p>除了上面三个，还有几个需要特殊开启的模式，越往后越「省心」、也越<strong>容易让你把方向盘整个交出去</strong>——这正是 Ch0 第一个坑：</p>
         <ul>
           <li><code>auto</code>（自动模式）——几乎什么都不问你、自己往下跑（有后台安全检查）。适合你确实信任的长任务，但代价是你看到的 eval 检查点变少了。</li>
-          <li><code>bypassPermissions</code>（跳过所有检查）——<strong>顾名思义，所有权限确认全部跳过，连受保护的路径都直接动。</strong>官方明确说它<strong>只该在隔离的容器 / 虚拟机里用</strong>。在你自己的 Mac 上、对着你真实的文件，<strong>不要开它</strong>。一时图省事跳过所有确认，等于把那个「不了解你全部心思的实习生」单独留在你家里、还把所有抽屉钥匙给了他。</li>
+          <li><code>dontAsk</code>——只对你<strong>事先在规则里允许过</strong>的操作不再追问，其余照样拦；多用于自动化 / 流水线场景，新手用不上。（连同上面 <code>auto</code>、下面 <code>bypassPermissions</code>，就是前面说的「6 个模式」里日常用不到的那 3 个。）</li>
+          <li><code>bypassPermissions</code>（跳过所有检查）——<strong>顾名思义，所有权限确认全部跳过，连受保护的路径都直接动。</strong>官方建议它<strong>只在隔离的容器 / 虚拟机里用</strong>。在你自己的 Mac 上、对着你真实的文件，<strong>不要开它</strong>。一时图省事跳过所有确认，等于把那个「不了解你全部心思的实习生」单独留在你家里、还把所有抽屉钥匙给了他。</li>
         </ul>
         <p>新手就老老实实在 <code>default</code> / <code>acceptEdits</code> / <code>plan</code> 之间转。<strong>「少被打断」永远不该用「不再验收」换。</strong></p>
       </div>
