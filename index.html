@@ -528,13 +528,36 @@ claude</code></pre>
       <h4>建 workspace，也是在喂 context</h4>
       <p>别小看「把文件放进一个项目文件夹」这件事。Ch3 你把笔记放进 <code>~/study/physics-notes/</code>，本身就是在给实习生整理工位——所有材料归在一处，他一进来就看得到全貌，而不是散落在桌面各处让他到处找。<strong>一个干净、命名清楚的 workspace，加上一份 <code>CLAUDE.md</code>，就是「高质量 context」的物理形态。</strong></p>
 
-      <h4>临时 context：把你的现状、诉求当场讲清楚</h4>
-      <p><code>CLAUDE.md</code> 装的是「长期不变」的背景（你是谁、什么叫做好）。但每次具体任务还有「这一次」的背景——这部分在对话里当场说。一条好指令通常交代三件事，和 Ch3 那条整理笔记的指令一模一样：<strong>我现在的状况（现状）＋我是谁（profile）＋我这次要什么（诉求）</strong>。</p>
-      <p>举个贴你生活的例子。明年 O-level，你想让 AI 帮你把这周的电学笔记整理成复习用的版本，好的说法是：</p>
-      <pre><code>我明年考 O-level，这周学的是电路（current electricity），raw/2026-week3.md
-是我的课堂笔记。帮我整理成一份「考前复习版」：每个公式后面补一句它什么时候用，
-每个定义配一个最简单的例子。我容易混 series 和 parallel，这部分讲细一点。</code></pre>
-      <p>对比一句「帮我整理一下笔记」——前者把现状（学了什么）、profile（O-level、容易混哪里）、诉求（复习版、补例子）全交代了，实习生才知道往哪使劲。<strong>context 喂得越具体，产出越不需要返工。这是从源头上少踩「AI slop」那个坑。</strong></p>
+      <h4>临时 context：把「这一次」讲清楚（最该练的一招）</h4>
+      <p><code>CLAUDE.md</code> 装的是「长期不变」的背景（你是谁、什么叫做好）。但每次具体任务，还有「这一次」的背景——这部分在对话里当场说。很多人就卡在这：一句「帮我弄一下」就回车，然后嫌产出不对。问题往往不在 AI 笨，而在你<strong>没把脑子里的画面交代出来</strong>——它再聪明，也看不见你心里想的那个成品。</p>
+      <p>下次开口前，照这份<strong>配方</strong>在心里过一遍，缺哪样补哪样：</p>
+      <ol>
+        <li><strong>现状</strong>——你在哪个阶段、手上已经有什么。（「这周刚学完电路，笔记在 <code>raw/2026-week3.md</code>」）</li>
+        <li><strong>目标</strong>——你到底要个什么<em>成品</em>。不是「整理一下」，是「一份考前能直接拿来背的复习版」。</li>
+        <li><strong>约束</strong>——限制和偏好：多长、什么格式、什么时候要，以及<strong>别</strong>怎么样。（「别写一大段废话开头」「用我看得懂的话，别上大学术语」）</li>
+        <li><strong>材料</strong>——把相关东西<strong>指给它</strong>，别自己凭记忆复述。（「我的笔记就在 <code>raw/2026-week3.md</code>，你直接读那个文件」）</li>
+        <li><strong>验收标准</strong>——怎样算「做好了」。你说得出标准，它才打得中，你回头也才知道拿什么去验收。（「每个公式后面，要有一句『什么时候用』」）</li>
+      </ol>
+      <p>几个让它一次到位的小技巧：</p>
+      <ul>
+        <li><strong>用例子「演」给它看，比形容词管用。</strong>「弄清楚一点」很虚；「像这样排：<em>公式 → 一句话说明什么时候用 → 一个最简单的例子</em>」它立刻就懂。</li>
+        <li><strong>报上你的水平。</strong>「我高中生，能看懂高一物理就行」——它好把深浅调到你这一档，而不是给你甩论文。</li>
+        <li><strong>产出跑偏了，先补 context，别急着憋一个更花哨的 prompt。</strong>九成情况是你哪句没讲清，不是话术不够巧。回头问自己一句：「我是不是没告诉它 ___？」把那一格补上，往往比换十种说法都管用。</li>
+      </ul>
+      <p>同一件事，交代清不清楚，产出差很远：</p>
+      <div style="display:flex; flex-wrap:wrap; gap:12px; margin:16px 0">
+        <div style="flex:1 1 260px; border:1px solid var(--rule); border-left:4px solid var(--warn); border-radius:8px; padding:12px 14px; background:var(--warn-bg)">
+          <p style="margin:0 0 6px"><strong>❌ 烂交代</strong></p>
+          <p style="margin:0 0 8px"><code>帮我整理一下笔记</code></p>
+          <p style="margin:0; color:var(--muted)">→ 它只能瞎猜：整理成什么样？给谁看？哪份笔记？多半还你一坨四平八稳、却对复习没多大用的东西——这就是 AI slop 的温床。</p>
+        </div>
+        <div style="flex:1 1 260px; border:1px solid var(--rule); border-left:4px solid var(--do); border-radius:8px; padding:12px 14px; background:var(--do-bg)">
+          <p style="margin:0 0 6px"><strong>✅ 讲清楚了</strong></p>
+          <p style="margin:0 0 8px"><code>我明年考 O-level，这周学的是电路（current electricity），raw/2026-week3.md 是我的课堂笔记。帮我整理成一份「考前复习版」：每个公式后面补一句它什么时候用，每个定义配一个最简单的例子。我容易混 series 和 parallel，这部分讲细一点。</code></p>
+          <p style="margin:0; color:var(--muted)">→ 现状、目标、约束、材料、验收标准全齐了，它一次就能打在点上。</p>
+        </div>
+      </div>
+      <p><strong>context 喂得越具体，产出越不需要返工——这是从源头上少踩「AI slop」那个坑。</strong>记住那个画面：你不是在「下命令」，你是在<strong>把一个超聪明、但对你一无所知的实习生，飞快地带进你的世界</strong>。带得越清楚，他越能替你打仗。</p>
 
       <hr style="border:none; border-top:2px dashed var(--rule); margin:28px 0">
 
