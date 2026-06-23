@@ -252,7 +252,7 @@ git commit -m "feat: scaffold static single-page site + design system + check sc
 1. **Research：** 按该任务的 research 清单逐条核实，写入 `docs/research/NN-<chapter>.md`。**关键事实（命令/版本/定价/安装/官方工具名/网页端功能名）必须 WebFetch 一手官方页确认**，每条标：来源 URL、是否已 WebFetch、查证日期（today: 2026-06-22）。无法核实的标"未核实"，绝不臆造（尤其定价档位、学生折扣、概念归属人）。
 2. **Verify research：** 打开该 md，确认清单每条都有来源或被显式标注未核实，且关键事实均已 WebFetch。
 3. **Write HTML：** 据 research 笔记，把内容填入 `index.html` 对应 `<section id="chN">`，复用 Task 1 的 class 组件，落实"章首 why / 类比 / 跟我做 / 注意 / 心法回扣 / 小结"等要素（按该章"必含要素"清单）。命令/版本/定价/工具名只能来自 research 笔记；主线示例命名只能来自 Canon；文风照样例。
-4. **机器校验：** Run `MIN_CHARS=200 node tools/check.mjs`。Expected: `CHECK OK: 10 chapters`、退出码 0（toc/section 一致、本章非空、标签闭合、box class 合法）。失败按提示修。
+4. **机器校验：** 先跑全局结构检查 `node tools/check.mjs`（toc/section 一致、标签闭合、box class 合法）；再跑本章非空检查 `ONLY=chN MIN_CHARS=200 node tools/check.mjs`（把 `chN` 换成本章，如 `ch0`）。两条都要 `CHECK OK: 10 chapters`、退出码 0。失败按提示修。（全局 `MIN_CHARS=200`——要求所有章都非空——留到 Task 12 跑。）
 5. **来源对账：** 逐句对照 research 笔记，确认本章正文出现的每个命令/版本/定价/工具名都能在 md 里找到来源；没有凭记忆杜撰的事实。（排版观感留到 Task 12 由你本人统一过目。）
 6. **Commit：** `git add docs/research/NN-<chapter>.md index.html && git commit -m "docs(chN): <chapter title>"`。
 
