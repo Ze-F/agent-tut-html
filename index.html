@@ -11,7 +11,7 @@
   <nav id="toc">
     <p class="site-title">从 LLM 到 Agent</p>
     <a class="toc-link" href="#ch0">0 · 心法先行</a>
-    <a class="toc-link" href="#ch1">1 · 两种界面各管什么</a>
+    <a class="toc-link" href="#ch1">1 · 三层界面各管什么</a>
     <a class="toc-link" href="#ch2">2 · terminal 与文件系统</a>
     <a class="toc-link" href="#ch3">3 · 上手 Claude Code</a>
     <a class="toc-link" href="#ch4">4 · 把心法用熟</a>
@@ -113,9 +113,9 @@
       </div>
     </section>
     <section id="ch1" class="chapter">
-      <h2>1 · 两种界面各管什么</h2>
+      <h2>1 · 三层界面各管什么</h2>
 
-      <p class="why"><strong>为什么要学这个：</strong>你已经知道 LLM 是"大脑"、agent 是"大脑＋手脚"——但具体在哪里用哪个？打开 claude.ai 对话窗口就够了，还是非得进命令行不可？这一章把两种界面说清楚，给你一个能真正用的决策框架：用完即走找网页，想沉淀、想碰文件，进命令行。搞清楚这个，你后面不会白走弯路。</p>
+      <p class="why"><strong>为什么要学这个：</strong>你已经知道 LLM 是"大脑"、agent 是"大脑＋手脚"——但具体在哪里用哪个？打开 claude.ai 对话窗口就够了，还是得开命令行？或者还有什么中间选项？这一章把三层界面说清楚，给你一个真正能用的决策框架：用完即走就留在网页；想让 agent 碰你的本地文件、但还没准备好命令行，有 Claude Cowork 接着；要长期维护项目、要发布上线、要完全掌控，再毕业到 Claude Code。搞清楚这三层，你后面不会走弯路。</p>
 
       <h3>先尝一口甜头：在网页里整理一段笔记</h3>
       <p>先别管界面怎么选，直接动手试一次——用 <span class="term">claude.ai</span>（Anthropic 官方的网页 / 桌面 App）整理你的 Physics 课堂笔记。不需要装任何东西，打开浏览器就能做。</p>
@@ -134,70 +134,79 @@
 
       <p>感受到了吗？交代 context（给笔记）→ 产出（Claude 整理）→ eval 验收（你看一眼）→ 修正（再问一句），四步闭环转了一圈，一分钟内。</p>
 
-      <h3>撞墙：结果留不下来</h3>
+      <h3>撞墙：结果留不下来，也碰不到文件</h3>
       <p>现在问题来了：那段整理好的 HTML 只存在这一个对话里。你关掉页面、下周再想用，得重新来过。更关键的是——<strong>它碰不到你电脑里的文件</strong>。你没法让 claude.ai 直接帮你把整理好的内容写进你桌面上的 <code>2026-week3.md</code>，更别说帮你建整个文件夹结构、或者一次处理十几周的笔记。</p>
-      <p>这不是 Bug，这就是 claude.ai 网页/App 的设计边界：它的产出存在<strong>对话里</strong>，不存在你的硬盘里。要让 AI 真正"动手"碰你的文件，需要给它一双真正的手脚——这就是为什么后面会学 <span class="term">Claude Code</span>（命令行 agent，官方说它"reads your codebase, edits files, and runs commands"）。</p>
+      <p>这不是 Bug，这就是 claude.ai 网页/App 的设计边界：它的产出存在<strong>对话里</strong>，不在你的硬盘里（能接收你上传的文件分析，但分析完结果只在对话里，不会回写到硬盘）。要让 agent 真正动手碰你的本地文件，需要往下走一层——这时候就出现了两条路：一条零命令行，一条完全掌控。</p>
 
-      <div class="box box-warn">
-        <p class="box-title">⚠️ 注意：claude.ai 网页 ≠ 帮你管文件</p>
-        <p>claude.ai 能接收你<strong>上传的文件</strong>（PDF、Word、图片等），但分析完了，结果只在对话里，<strong>不会自动回写到你硬盘</strong>。想让 AI 持续维护你本地的笔记文件夹？那件事是 Claude Code 的活儿，第 2–3 章再教。</p>
-      </div>
-
-      <h3>决策框架：什么时候用哪个</h3>
-      <p>两种界面各有优势，不是谁比谁好，而是场景不同。下面这张表帮你一眼看清楚：</p>
+      <h3>决策框架：三层进阶模型</h3>
+      <p>不是谁比谁好，是场景不同、能力不同。下面这张表帮你一眼定位：</p>
 
       <table style="width:100%; border-collapse:collapse; margin:18px 0; font-size:15px">
         <thead>
           <tr style="background:var(--core-bg)">
-            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:50%">🌐 claude.ai 网页 / App 更适合</th>
-            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:50%">⌨️ Claude Code（CLI）更适合</th>
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:20%">层级</th>
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:27%">能做什么</th>
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:27%">碰不到 / 做不到</th>
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:26%">最适合的场景</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong><span class="term">Research（联网多步研究）</span></strong>：官方内置功能，让 Claude 自主搜索多个来源、逐步深挖，产出有引用的报告</td>
-            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>任何你想长期维护的项目</strong>：本地文件夹 ＋ CLI ＋ 云盘 / GitHub 备份，才能沉淀下来</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>第 1 层</strong><br>claude.ai 网页 / App</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><span class="term">Research（联网多步研究）</span>；<span class="term">Artifacts（交互可视化 / 迷你页）</span>；上传文件快速分析；轻量问答探索</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">读写你硬盘上的文件；跨会话持久维护项目</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">用完即走：临时查资料、头脑风暴、整理一段笔记、生成可分享的交互小页</td>
           </tr>
           <tr style="background:var(--do-bg)">
-            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>Artifacts（实时可视化 / 交互页）</strong>：生成可互动的图表、迷你网页、React 组件；用完即分享</td>
-            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>碰真实文件 / 跨会话 / 批量处理</strong>：读写你硬盘里的文件，比如一次整理 10 周的 <code>2026-week3.md</code></td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>第 2 层</strong><br>Claude Cowork</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">零 terminal、不写代码，直接读写本地文件 / 文件夹；和 Claude Code 同一套 agentic 引擎；在 Claude 桌面 App 里启动</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">跑自定义命令；版本控制（git）；自动发布到 GitHub Pages；编程级自动化</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">想让 agent 整理 / 改名 / 归档你的本地文件夹，但还没准备好命令行</td>
           </tr>
           <tr>
-            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>用完即走的轻量探索</strong>：临时查个东西、头脑风暴、整理一段笔记——不需要保留的一次性任务</td>
-            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>本地可视化</strong>：让 agent 写 Python 脚本或 HTML 文件，跑完结果留在你机器上</td>
-          </tr>
-          <tr style="background:var(--do-bg)">
-            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>上传文件快速分析</strong>：PDF / Word / 图片，分析一次、得到答案，不需要持续维护</td>
-            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>运行命令 / 自动化流程</strong>：比如自动把整理好的笔记发布到 GitHub Pages</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>第 3 层</strong><br>Claude Code（CLI）</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">读写文件、跑任意命令、git 版本控制、批量自动化、发布到 GitHub Pages；完全可编程；长期维护项目</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">（没有硬边界——这一层你全拿得到）</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">要长期维护、要发布上线、要完全掌控：主线示例①「课堂笔记 → GitHub Pages」的完整路线就在这一层完成</td>
           </tr>
         </tbody>
       </table>
 
-      <div class="box box-core">
-        <p class="box-title">🧠 一句话原则</p>
-        <p><strong>用完即走的探索 → 网页 / App；要沉淀 / 要维护 / 要碰文件 → 本地 ＋ CLI ＋ 备份。</strong></p>
-        <p>记不住表没关系，记住这句话，在每次启动 AI 之前先问自己："这件事做完就完了，还是我以后还要改？" 答案给了，界面也给了。</p>
+      <div class="box box-warn">
+        <p class="box-title">⚠️ Cowork 的平台限制</p>
+        <p><span class="term">Claude Cowork</span> 目前只在 <strong>Claude 桌面 App（macOS / Windows）</strong> 里运行，<strong>不支持网页端或手机端</strong>。访问需要付费档（Pro、Max、Team、Enterprise）。（来源：Anthropic 官方支持文档，2026-06-23 核实。）</p>
       </div>
 
-      <h3>延伸：可视化不一定非要在线</h3>
-      <p>可能你想"网页端的 <span class="term">Artifacts（实时可视化产物）</span>看起来挺酷的，本地能不能做？"能——让 Claude Code 帮你写一个 Python 脚本（比如用 Matplotlib 画图）或者一个 HTML 文件，跑出来的图和页面就存在你机器上，随时能改。本地可视化路线好处是：产物是<strong>你的文件</strong>，纳入版本控制、改了就是改了，不依赖任何在线服务。</p>
+      <h3>Cowork 和 Claude Code 是什么关系？</h3>
+      <p>官方说得直接：Claude Cowork 用的是「和 Claude Code 同一套 agentic 架构（<em>same agentic architecture that powers Claude Code</em>）」，只是入口搬进了 Claude 桌面 App 的 GUI 界面，不需要打开 terminal。两者的区别在于控制深度——Cowork 给你"零 terminal 动文件"的入门；Claude Code 给你"跑命令、版本控制、自动发布"的完全掌控。Cowork 不取代 Claude Code，而是它的<strong>无 terminal 入门版</strong>。</p>
+      <p>换个比喻：Cowork 像自动挡，Claude Code 像手动挡。自动挡先把你开上路，手动挡让你完全控制车子——路是同一条，发动机也是同一颗。</p>
 
-      <h3>心法在两种界面下完全一致</h3>
+      <h3>本地可视化：第 2 / 3 层都能做</h3>
+      <p>你可能想："网页端的 <span class="term">Artifacts</span>（交互可视化产物）挺酷的，本地能不能做？"能——在第 2 层让 Cowork 帮你生成一个 HTML 可视化文件、直接存到你的文件夹；或者到了第 3 层，让 Claude Code 写 Python 脚本画图，跑完结果留在你机器上、纳入版本控制。本地可视化的好处是产物是<strong>你的文件</strong>，随时能改，不依赖任何在线服务。</p>
+
+      <div class="box box-core">
+        <p class="box-title">🧠 一句话原则</p>
+        <p><strong>用完即走的探索 → 网页 / App（第 1 层）；想动本地文件又不想碰命令行 → Claude Cowork（第 2 层）；长期维护 / 发布 / 完全掌控 → Claude Code ＋ 备份（第 3 层）。</strong></p>
+        <p>记不住表没关系，记住这句话。每次启动 AI 前先问自己两个问题："这件事做完就完了，还是我以后还要改？要不要碰我硬盘上的文件？" 答案给了，层级也给了。</p>
+      </div>
+
+      <h3>心法在三层下完全一致</h3>
       <div class="box box-core">
         <p class="box-title">🧠 心法回扣 · 换了界面，心法不换</p>
-        <p>无论你在 claude.ai 网页里整理笔记，还是在终端里让 Claude Code 帮你批量处理文件——<strong>四步闭环不变</strong>：交代清楚 context → 让它产出 → 你来 eval 验收 → 给反馈修正。</p>
+        <p>无论你在 claude.ai 网页里整理笔记、在 Cowork 里整理本地文件夹、还是在 Claude Code 里批量处理十几周的 Physics 笔记——<strong>四步闭环不变</strong>：交代清楚 context → 让它产出 → 你来 eval 验收 → 给反馈修正。</p>
         <p>界面是工具，心法才是本事。工具换了心法还在，你永远是那个清醒的验收者。</p>
       </div>
 
       <div class="box box-summary">
         <p class="box-title">小结</p>
         <ul>
-          <li>claude.ai <strong>网页 / App</strong> 适合"用完即走"的任务：联网研究（<strong>Research</strong>）、交互可视化（<strong>Artifacts</strong>）、轻量一次性探索。</li>
-          <li><strong>Claude Code（CLI）</strong> 适合一切"想留下来"的工作：读写本地文件、跨会话维护项目、批量处理、自动发布。</li>
-          <li>撞墙点只有一个：<strong>claude.ai 不帮你改硬盘上的文件</strong>——想让 AI 动手维护你的文件夹，得用 CLI。</li>
-          <li>心法不因界面而变：<strong>四步闭环在哪里都管用</strong>，你永远是那个说了算的验收者。</li>
+          <li><strong>第 1 层 · claude.ai 网页 / App：</strong>用完即走，适合联网研究（<strong>Research</strong>）、交互可视化（<strong>Artifacts</strong>）、轻量一次性探索。<strong>碰不到你的本地文件。</strong></li>
+          <li><strong>第 2 层 · Claude Cowork：</strong>零 terminal、不写代码，却能直接读写本地文件 / 文件夹；跑在 Claude 桌面 App 里，和 Claude Code 同一套 agentic 引擎；付费档可用，仅限桌面（macOS / Windows）。是非技术者让 agent 动本地文件的最丝滑入门。</li>
+          <li><strong>第 3 层 · Claude Code（CLI）：</strong>完全掌控——读写文件、跑命令、版本控制、批量自动化、发布到 GitHub Pages。主线示例①「课堂笔记 → 网页（HTML）→ 发布到 GitHub Pages」的完整路线，在这一层完成。</li>
+          <li>Cowork 不取代 Claude Code，是它的<strong>无 terminal 入门版</strong>；terminal 与 Claude Code 是完整教学目标——是你明确要学的，定位成毕业到更强、更可控的一层。</li>
+          <li>心法在三层下一致：<strong>四步闭环在哪里都管用</strong>，你永远是那个说了算的验收者。</li>
         </ul>
-        <p><strong>一句话回顾：</strong>用完即走找网页，要沉淀、要碰文件就进命令行——下一章我们就去认识那个命令行。</p>
+        <p><strong>一句话回顾：</strong>用完即走找网页（第 1 层）；想动本地文件又怕命令行找 Cowork（第 2 层）；要长期维护 / 发布 / 完全掌控，毕业到 Claude Code（第 3 层）——下一章先去认识命令行。</p>
       </div>
     </section>
     <section id="ch2" class="chapter"><h2>2 · terminal 与文件系统</h2></section>
