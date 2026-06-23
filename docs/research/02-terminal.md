@@ -54,7 +54,7 @@
 | `ls`   | List information about file(s)               | `ls`、`ls -l`、`ls -la`              | 列出目录内容；`-l` 详细格式；`-a` 含隐藏文件 |
 | `cd`   | Change Directory                             | `cd 路径`、`cd ..`、`cd ~`           | 切换目录；`cd ..` 返回上一级；`cd ~` 回家目录 |
 | `cat`  | Concatenate and print (display) the content of files | `cat 文件名`                | 将文件内容打印到终端 |
-| `mkdir`| Make Directory                               | `mkdir 文件夹名`                     | 新建文件夹 |
+| `mkdir`| Make Directory                               | `mkdir 文件夹名`                     | 新建文件夹；`-p` 建好多层父目录且目录已存在时不报错（幂等），来源 ss64.com/mac/mkdir.html + `man mkdir`，2026-06-23 |
 | `cp`   | Copy one or more files to another location   | `cp 源 目标`                         | 复制文件；`cp -r` 复制整个文件夹（递归） |
 | `mv`   | Move or rename files or directories          | `mv 源 目标`                         | 移动文件或重命名（改名就是移到同目录新名） |
 | `rm`   | Remove files                                 | `rm 文件名`                          | **永久删除，不经过废纸篓**；无法撤销（除非有 Time Machine） |
