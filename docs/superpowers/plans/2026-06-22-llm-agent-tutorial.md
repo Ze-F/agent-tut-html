@@ -27,6 +27,10 @@
 
 > 内容任务在写到主线示例时，**一律使用以下固定命名**，不得自创。若执行中发现 canon 需要调整，先改本节、再改正文，保持全篇一致。
 
+- **三条主线短名（标签措辞固定，友好但保留技术词）：**
+  - ① **课堂笔记 → 网页（HTML）→ 发布到 GitHub Pages**（"网页"与"HTML"成对出现，发布平台一律叫 GitHub Pages）
+  - ② **第二大脑（second brain）：用 Obsidian + Claude 共建知识库**
+  - ③ **机械工程（mechanical engineering）兴趣拓展**
 - **学科载体：** 用他真实在学的科目 **Physics（物理）** 作为"课堂笔记"示例载体（与机械工程兴趣呼应；如你另有偏好可在执行前替换本行）。
 - **主 workspace 文件夹：** `~/study/physics-notes/`
 - **当天原始笔记文件：** `~/study/physics-notes/raw/2026-week3.md`
