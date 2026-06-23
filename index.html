@@ -476,7 +476,195 @@ rm ~/study/physics-notes/raw/2026-week3-bak.md</code></pre>
         <p><strong>一句话回顾：</strong>Claude Code 是你 terminal 里的 agent，装好、登录、cd 进项目目录、说清楚你要什么——它就开始在 agentic loop 里帮你动手；你的活是交代 context 和做 eval。</p>
       </div>
     </section>
-    <section id="ch4" class="chapter"><h2>4 · 把心法用熟</h2></section>
+    <section id="ch4" class="chapter">
+      <h2>4 · 把心法用熟</h2>
+
+      <p class="why"><strong>为什么要学这个：</strong>到这里，你已经能让 Claude Code 在 terminal 里帮你动手了。但「能动手」和「帮你做对」是两回事。Ch0 给了你心法的骨架——四步闭环、两个坑（被 AI 牵着走、AI slop）；这一章把骨架填成肌肉：<strong>具体怎么把高质量 context 喂进去，又具体怎么做一次真正的 eval。</strong>这是全书的「魂」。把这两件事做扎实，方向盘就一直在你手里——AI 跑得再快，也跑不偏。这一章稍微长一点，因为它最重要。</p>
+
+      <h3>先把闭环摆回眼前</h3>
+      <p>Ch0 的四步闭环——<strong>交代 context → 产出 → eval 验收 → 修正</strong>——本质上只分两半：<strong>① 喂进去什么</strong>（context，输入半边），和 <strong>③ 你怎么验收</strong>（eval，输出半边）。中间的「产出」是 AI 的事，「修正」是把 eval 的结论再喂回去。所以你真正要练熟的，就是这两件事。这一章前半教你<strong>喂高质量 context</strong>，后半教你<strong>做真正的 eval</strong>。下面所有的命令、模式、技巧，都只是为这两件事服务的工具——别把它们当功能清单背，要当成「怎么喂得更清楚」或「怎么验得更狠」来理解。</p>
+
+      <hr style="border:none; border-top:2px dashed var(--rule); margin:28px 0">
+
+      <h3 style="color:var(--core)">前半 · 怎么喂高质量 context</h3>
+      <p>回到实习生的比喻：一个对你一无所知的实习生，你每天早上都得重新跟他自我介绍一遍——这太累了。如果能把「我是谁、在做什么、什么叫做好」写成一张纸贴在他桌上，他每次上工先看一眼，就省了无数次重复交代。Claude Code 里那张纸，叫 <code>CLAUDE.md</code>。</p>
+
+      <h4><code>CLAUDE.md</code>：写给 agent 的「项目说明书」</h4>
+      <p><span class="term">CLAUDE.md（项目记忆文件）</span>是一个用 Markdown 写的纯文本文件，放在你的项目文件夹里。官方说得很直白：<strong>「你用纯文本写好它，Claude 在每次会话开始时读它」</strong>（原文：<em>You write these files in plain text; Claude reads them at the start of every session.</em>）。也就是说，你不用每次开新对话都重新交代背景——把背景写进 <code>CLAUDE.md</code>，它自动读。</p>
+
+      <div class="box box-warn">
+        <p class="box-title">⚠️ 关键认知：它是「建议」，不是「铁律」</p>
+        <p>很多人误以为 <code>CLAUDE.md</code> 是一份强制配置——写了「不许做 X」它就一定不做。<strong>不是这样。</strong>官方明确说：Claude 把它当成 <strong>context（上下文），而不是强制配置</strong>（<em>Claude treats them as context, not enforced configuration.</em>）。它会尽力遵守，但不保证 100%。说人话：<code>CLAUDE.md</code> 是你给实习生的「背景介绍 + 工作守则」，不是上了锁的保险箱。真要拦死某个危险操作，得靠权限规则（后半会讲），不是靠在这里写一句话。</p>
+      </div>
+
+      <p>怎么生成和管理它，有两个命令：</p>
+      <ul>
+        <li><code>/init</code>——让 Claude 自动分析当前项目，帮你<strong>生成一份 <code>CLAUDE.md</code> 草稿</strong>。第一次进一个新项目时很省事，生成完你再按自己的需要改。</li>
+        <li><code>/memory</code>——<strong>查看和编辑</strong>当前会话加载了哪些 <code>CLAUDE.md</code>。想确认「它到底读到了什么背景」，用这个。</li>
+      </ul>
+      <p>还有一条官方建议要记住：<strong>每个 <code>CLAUDE.md</code> 尽量控制在 200 行以内</strong>。太长了它反而抓不住重点、遵守率下降——就像守则写成一本书，实习生根本读不完。简洁、只写真正重要的规则，效果最好。</p>
+
+      <div class="box box-do">
+        <p class="box-title">🙌 跟我做 · 给 Physics 项目写一份 <code>CLAUDE.md</code></p>
+        <p>Ch3 你已经有了 <code>~/study/physics-notes/</code> 这个 workspace。现在给它配一张「实习生守则」，让以后每次对话它都先认识你。</p>
+        <p><strong>第一步：进项目目录，启动 Claude Code</strong></p>
+        <pre><code>cd ~/study/physics-notes
+claude</code></pre>
+        <p><strong>第二步：让它先帮你起个草稿</strong>（在对话里输入）：</p>
+        <pre><code>/init</code></pre>
+        <p>它会扫一眼这个文件夹，生成一份 <code>CLAUDE.md</code> 草稿。</p>
+        <p><strong>第三步：把草稿改成真正描述「你」的内容。</strong>你可以直接让它改，比如这样说：</p>
+        <pre><code>请把 CLAUDE.md 改写成下面这些内容（保持简短）：
+- 我是谁：高中生，在新加坡读书，明年考 O-level，正在学 Physics。
+- 这个项目是干嘛的：整理我每周的 Physics 课堂笔记，原始笔记在 raw/，整理后要能转成 HTML 发到网上。
+- 我心里「整理得好」是什么样：结构清晰、保留所有公式和定义、中英术语都标出来、宁可啰嗦也不要漏知识点；解释要让一个刚学这章的人也能看懂。
+- 永远不要做：不要自己删掉或简化我原始笔记里的内容；不确定的地方先问我，别猜。</code></pre>
+        <p><strong>第四步：用 <code>/memory</code> 确认它读进去了</strong>，看看加载的 <code>CLAUDE.md</code> 是不是你刚写的那份。</p>
+        <p><em>从此以后，你在这个文件夹里开任何对话，都不用再重新解释「我是谁、什么叫整理得好」——它开场就知道。这就是「把高质量 context 一次喂好、长期复用」。</em></p>
+      </div>
+
+      <h4>建 workspace，也是在喂 context</h4>
+      <p>别小看「把文件放进一个项目文件夹」这件事。Ch3 你把笔记放进 <code>~/study/physics-notes/</code>，本身就是在给实习生整理工位——所有材料归在一处，他一进来就看得到全貌，而不是散落在桌面各处让他到处找。<strong>一个干净、命名清楚的 workspace，加上一份 <code>CLAUDE.md</code>，就是「高质量 context」的物理形态。</strong></p>
+
+      <h4>临时 context：把你的现状、诉求当场讲清楚</h4>
+      <p><code>CLAUDE.md</code> 装的是「长期不变」的背景（你是谁、什么叫做好）。但每次具体任务还有「这一次」的背景——这部分在对话里当场说。一条好指令通常交代三件事，和 Ch3 那条整理笔记的指令一模一样：<strong>我现在的状况（现状）＋我是谁（profile）＋我这次要什么（诉求）</strong>。</p>
+      <p>举个贴你生活的例子。明年 O-level，你想让 AI 帮你把这周的电学笔记整理成复习用的版本，好的说法是：</p>
+      <pre><code>我明年考 O-level，这周学的是电路（current electricity），raw/2026-week3.md
+是我的课堂笔记。帮我整理成一份「考前复习版」：每个公式后面补一句它什么时候用，
+每个定义配一个最简单的例子。我容易混 series 和 parallel，这部分讲细一点。</code></pre>
+      <p>对比一句「帮我整理一下笔记」——前者把现状（学了什么）、profile（O-level、容易混哪里）、诉求（复习版、补例子）全交代了，实习生才知道往哪使劲。<strong>context 喂得越具体，产出越不需要返工。这是从源头上少踩「AI slop」那个坑。</strong></p>
+
+      <hr style="border:none; border-top:2px dashed var(--rule); margin:28px 0">
+
+      <h3 style="color:var(--warn)">后半 · 怎么做真正的 eval</h3>
+      <p>context 喂得再好，AI 也会出错——它毕竟是个动作飞快但不了解你全部心思的实习生。所以闭环的第三步 <strong>eval（验收）</strong>，是<strong>你的核心职责，没法外包</strong>。Ch0 说过、Ch3 说过，这里要把它讲成可操作的动作。eval 的反面就是 Ch0 那个最大的坑——<strong>一路点「好」「继续」，把方向盘交出去</strong>。下面这些工具，全是帮你<strong>不交出方向盘</strong>的。</p>
+
+      <h4>核心动作：看 diff，别盲目接受</h4>
+      <p>AI 改完文件，第一件事不是说「谢谢」，是<strong>看它到底改了什么</strong>。命令是：</p>
+      <pre><code>/diff</code></pre>
+      <p><span class="term">diff（差异对比）</span>会把所有还没提交的改动逐行列出来：绿色是新增、红色是删掉的。你扫一遍，问自己三个问题：<strong>它改的是我想要的地方吗？它有没有顺手删了我不想删的东西？这些改动我看得懂吗？</strong>看不懂的，就追问它「这一段为什么这么改」——看懂了再算数。这一步就是把 Ch0「你自己都没真正看懂的东西」挡在门外。</p>
+
+      <h4>把验收结论喂回去——这就是「修正」</h4>
+      <p>看完 diff，你心里有了判断（这就是 eval），下一步是<strong>把判断说出来，让它改</strong>（这就是闭环第四步「修正」）。别只会说「不对」，要说清哪里不对、你想要什么：</p>
+      <pre><code>第二节公式列对了，但你把我笔记里『右手定则』那段整段删了——
+那个要保留。另外例子太难，换成更基础的。</code></pre>
+      <p>它改完，你再 <code>/diff</code> 看一遍。<strong>看 diff → 给反馈 → 再看 diff</strong>，这就是四步闭环在 terminal 里转起来的真实样子。圈转得越勤，产出越贴你心意。</p>
+
+      <h4>让权限提示帮你 eval：每次确认都是一个检查点</h4>
+      <p>你大概注意到了：Claude Code 动手改文件前，常常会停下来问你一句「我打算这么做，可以吗？」——这不是麻烦，<strong>这是免费的 eval 检查点</strong>。它把「我准备做什么」摊在你面前，等你拍板。这个「停下来问不问、问哪些」的行为，由<span class="term">权限模式（permission mode）</span>控制。Claude Code 一共有 6 个模式，但<strong>日常你只要先认得三个</strong>：</p>
+      <table style="width:100%; border-collapse:collapse; margin:18px 0; font-size:15px">
+        <thead>
+          <tr style="background:var(--core-bg)">
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:22%">模式</th>
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:40%">它会自动放行什么</th>
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:38%">什么时候用</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><code>default</code><br>（默认）</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">只有「读」操作自动放行；要改文件、跑命令都得问你</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">入门、做重要 / 敏感的事——你想盯紧每一步时</td>
+          </tr>
+          <tr style="background:var(--do-bg)">
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><code>acceptEdits</code><br>（自动接受编辑）</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">读 + 改文件 + 常见文件操作（建文件夹、改名等）都自动放行</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">你已经信任它在做的事、想少被打断地连续迭代时</td>
+          </tr>
+          <tr>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><code>plan</code><br>（计划模式）</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">只读、只探索——<strong>完全不碰你的文件</strong>，只列出一份计划给你看</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">大改动动手前，先让它探索 + 出方案，你审完计划再放行</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>会话里按 <code>Shift + Tab</code> 就能在这三个模式之间循环切换，左下角会显示当前在哪个模式。<strong>这三个模式其实是一根「eval 严格程度」的滑杆：</strong><code>default</code> 最严（步步问你）、<code>acceptEdits</code> 松一些（信任它动手、你事后用 <code>/diff</code> 补验收）、<code>plan</code> 则是「动手前先验收一次计划」。选哪个，取决于这件事你想盯多紧。</p>
+
+      <h4>plan 模式：在它动手之前就 eval</h4>
+      <p><code>plan</code> 模式值得单独说，因为它把 eval 提前到了「动手之前」。官方定义：<strong>计划模式让 Claude 只研究、只提方案，但「不改你的源文件」</strong>（原文：<em>but does not edit your source.</em>）。它会读文件、探索，最后给你一份「我打算怎么做」的计划——你审这份计划，觉得行才放它去做。进入方式有两种：按 <code>Shift + Tab</code> 循环到 plan，或者直接输入命令并带上任务说明：</p>
+      <pre><code>/plan 帮我把这学期所有 raw/ 里的笔记整理成统一格式</code></pre>
+      <p>计划出来后，你可以批准它去执行、也可以说「这里改一下」让它重新规划。<strong>对「一次要动很多文件」的大任务，先 plan 一下，是性价比最高的 eval</strong>——在它动手之前就把方向纠正了，比事后看着一堆改动收拾要省事得多。</p>
+
+      <div class="box box-warn">
+        <p class="box-title">⚠️ 那几个「省心但危险」的模式，别乱开</p>
+        <p>除了上面三个，还有几个需要特殊开启的模式，越往后越「省心」、也越<strong>容易让你把方向盘整个交出去</strong>——这正是 Ch0 第一个坑：</p>
+        <ul>
+          <li><code>auto</code>（自动模式）——几乎什么都不问你、自己往下跑（有后台安全检查）。适合你确实信任的长任务，但代价是你看到的 eval 检查点变少了。</li>
+          <li><code>bypassPermissions</code>（跳过所有检查）——<strong>顾名思义，所有权限确认全部跳过，连受保护的路径都直接动。</strong>官方明确说它<strong>只该在隔离的容器 / 虚拟机里用</strong>。在你自己的 Mac 上、对着你真实的文件，<strong>不要开它</strong>。一时图省事跳过所有确认，等于把那个「不了解你全部心思的实习生」单独留在你家里、还把所有抽屉钥匙给了他。</li>
+        </ul>
+        <p>新手就老老实实在 <code>default</code> / <code>acceptEdits</code> / <code>plan</code> 之间转。<strong>「少被打断」永远不该用「不再验收」换。</strong></p>
+      </div>
+      <p>顺带一提，受保护的路径（比如 <code>.git</code>、你的 <code>~/.zshrc</code> 这类）即使在 <code>acceptEdits</code> 下要写也会照样问你——只有 <code>bypassPermissions</code> 会把这层保护也关掉。想细看 / 管理具体的权限规则，用 <code>/permissions</code>。</p>
+
+      <h4>拆长任务：context 清楚 + eval 容易，一举两得</h4>
+      <p>有个习惯能同时改善 context 和 eval：<strong>别把一个庞大模糊的任务一口气甩给它。</strong>「帮我把这学期笔记全弄好」太大太糊——它不知道从哪下手（context 不清），你也没法验收（eval 无从下口）。拆成「先整理 week3 这一篇」「再统一所有标题格式」「最后转成 HTML」，每一小步都<strong>好交代、好验收</strong>。这也正是 <code>plan</code> 模式帮你做的事：把大任务拆成清单，你逐项过目。</p>
+
+      <h4>管好 context 这块「黑板」：<code>/clear</code> vs <code>/compact</code> vs <code>/context</code></h4>
+      <p>AI 的 context window（上下文窗口）像一块有限的黑板：聊得越久，黑板写得越满，早期的内容会被挤掉、它也容易「忘事」或被无关的旧对话干扰。管好这块黑板，本质上是<strong>保证它手上的 context 始终干净、相关</strong>——这又回到了「喂高质量 context」。三个命令各管一摊：</p>
+      <table style="width:100%; border-collapse:collapse; margin:18px 0; font-size:15px">
+        <thead>
+          <tr style="background:var(--core-bg)">
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:24%">命令</th>
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:40%">它做什么</th>
+            <th style="padding:10px 12px; text-align:left; border:1px solid var(--rule); width:36%">什么时候用</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><code>/context</code></td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">显示黑板现在用了多少（像个进度条）</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">想知道「快满了吗」，先看一眼</td>
+          </tr>
+          <tr style="background:var(--do-bg)">
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><code>/compact</code></td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">把当前对话压缩成摘要、腾出空间，<strong>继续同一个任务</strong></td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">同一个长任务还没做完，但黑板快满了</td>
+          </tr>
+          <tr>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><code>/clear</code></td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top">擦掉黑板、开一段全新对话（旧对话有保存，可恢复）</td>
+            <td style="padding:9px 12px; border:1px solid var(--rule); vertical-align:top"><strong>完全换一件事</strong>，不需要之前的上下文了</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>一句话分清最常混的两个：<strong>同一个任务、想接着干，用 <code>/compact</code>；换个新任务、之前的不要了，用 <code>/clear</code>。</strong></p>
+
+      <div class="box box-do">
+        <p class="box-title">🙌 跟我做 · 三个 eval 习惯，今天就练</p>
+        <p>下次让 Claude Code 帮你改 Physics 笔记时，刻意做这三下：</p>
+        <p>1. 它改完，先打 <code>/diff</code> 看改了什么，<strong>别急着说「好」</strong>。</p>
+        <p>2. 看到不对的地方，具体说出哪里不对、你要什么，让它改——然后再 <code>/diff</code> 一遍。</p>
+        <p>3. 这件事彻底做完、要换下一件事时，打 <code>/clear</code> 给黑板擦干净再开始。</p>
+        <p><em>三下做满，你就完整转了一圈四步闭环，而且方向盘从头到尾在你手上。</em></p>
+      </div>
+
+      <div class="box box-warn">
+        <p class="box-title">⚠️ 注意 · 别让「确认」变成肌肉记忆</p>
+        <p>最隐蔽的坑不是某个危险命令，是<strong>你对着权限提示无脑按回车</strong>——提示框还在，你已经习惯性放行了。那一刻 eval 名存实亡，和开 <code>bypassPermissions</code> 没区别。<strong>每个确认框，都值得你真的读一眼它要做什么再决定。</strong>慢半秒，方向盘就还在你手里。</p>
+      </div>
+
+      <div class="box box-core">
+        <p class="box-title">🧠 心法回扣 · 一切都挂在四步闭环上</p>
+        <p>这一章看着工具很多，其实只有两件事：</p>
+        <ul>
+          <li><strong>喂 context（闭环第①步）：</strong><code>CLAUDE.md</code> 装长期背景、对话里讲清这次的现状/profile/诉求、建好 workspace、拆小任务、<code>/clear</code> 与 <code>/compact</code> 让黑板保持干净——全是「让它更懂你要什么」。</li>
+          <li><strong>做 eval（闭环第③步）：</strong><code>/diff</code> 看改动、权限提示当检查点、<code>plan</code> 模式提前审计划、看完把结论喂回去（第④步修正）——全是「让你始终说了算」。</li>
+        </ul>
+        <p>AI 负责产出（第②步）；<strong>context 和 eval 这两半，永远是你的。</strong>工具会更新换代，这个分工不会变。</p>
+      </div>
+
+      <div class="box box-summary">
+        <p class="box-title">小结</p>
+        <ul>
+          <li><strong>四步闭环 = 喂 context（输入半）+ 做 eval（输出半）</strong>，中间产出归 AI、修正是把 eval 结论喂回去。</li>
+          <li><strong>喂 context：</strong><code>CLAUDE.md</code> 写长期背景（<code>/init</code> 起草、<code>/memory</code> 查看、控制在 200 行内），它是<strong>建议不是铁律</strong>；对话里讲清现状/profile/诉求；建干净 workspace；拆小任务。</li>
+          <li><strong>做 eval：</strong><code>/diff</code> 看改动、不盲目接受、把结论喂回去再看一遍；权限提示是免费检查点。</li>
+          <li><strong>权限模式当 eval 滑杆：</strong>新手在 <code>default</code> / <code>acceptEdits</code> / <code>plan</code> 之间用 <code>Shift+Tab</code> 切换；<code>plan</code> 让你在它动手前就审计划；<code>auto</code> / <code>bypassPermissions</code> 省心但危险，<strong>真实文件上别开 <code>bypassPermissions</code></strong>。</li>
+          <li><strong>管黑板：</strong>同一任务用 <code>/compact</code>、换任务用 <code>/clear</code>、<code>/context</code> 看占用。</li>
+        </ul>
+        <p><strong>一句话回顾：</strong>把心法用熟，就是把两件事做扎实——用 <code>CLAUDE.md</code> 和清楚的指令<strong>喂高质量 context</strong>，用 <code>/diff</code> 和权限模式<strong>做真正的 eval</strong>；中间 AI 动手，方向盘始终在你手上。</p>
+      </div>
+    </section>
     <section id="ch5" class="chapter"><h2>5 · 让产出沉淀</h2></section>
     <section id="ch6" class="chapter"><h2>6 · 第二大脑</h2></section>
     <section id="ch7" class="chapter"><h2>7 · MCP 与 Skills</h2></section>
