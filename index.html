@@ -827,7 +827,115 @@ git push -u origin main</code></pre>
         <p><strong>一句话回顾：</strong>Markdown 让 AI 生成内容、HTML 让浏览器显示、git push 让 GitHub Pages 发布上线——把这三步串起来，你的笔记就从本地草稿变成了随时随地可访问的网页。</p>
       </div>
     </section>
-    <section id="ch6" class="chapter"><h2>6 · 第二大脑</h2></section>
+    <section id="ch6" class="chapter">
+      <h2>6 · 第二大脑</h2>
+
+      <p class="why"><strong>为什么要学这个：</strong>Ch5 你把 Physics 笔记变成了一个网页发到了 GitHub Pages——这是产出的第一步：把它发出去。但还有另一个方向：把学到的东西<strong>留下来</strong>，积累成真正属于你的知识库，下次用得上。这就是「第二大脑（second brain）」的核心想法：在大脑之外建一个外部数字库，把你读过、学过、想过的东西系统地存进去。以前靠人工整理，现在 AI 可以帮你维护——这一章就把这件事做起来。</p>
+
+      <h3>「第二大脑」是谁提出的</h3>
+      <p>「第二大脑（second brain）」这个叫法来自 <strong>Tiago Forte</strong> 于 2017 年推出的 BASB（Building a Second Brain）课程，2022 年出版成书。他在官网给出的核心定义是：</p>
+      <blockquote style="border-left:3px solid var(--core); margin:12px 0; padding:8px 12px; color:var(--muted); font-style:italic">"A Second Brain is an external, centralized, digital repository for the things you learn and the resources from which they come."</blockquote>
+      <p>翻译过来就是：一个外挂在大脑之外、集中存放你所学一切的数字仓库。Forte 的框架叫 C.O.D.E.：Capture（捕捉）/ Organize（组织）/ Distill（提炼）/ Express（输出）。</p>
+
+      <h3>AI 原生版本：Karpathy 的「LLM Wiki」</h3>
+      <p>2026 年 4 月，AI 研究员 <strong>Andrej Karpathy</strong> 在 X（Twitter）上描述了一种用 LLM 构建个人知识库的思路，随后在 GitHub 发布了一份可直接复制给 agent 使用的「idea file」（Gist）。他本人从未在原文中使用「second brain」这个词——他管这个东西叫 <strong>LLM wiki</strong> 和 "personal knowledge base"。</p>
+      <p>Karpathy Gist 里有一句话最能点清这种模式的本质：</p>
+      <blockquote style="border-left:3px solid var(--core); margin:12px 0; padding:8px 12px; color:var(--muted); font-style:italic">"Obsidian is the IDE; the LLM is the programmer; the wiki is the codebase."</blockquote>
+      <p>他还说："The wiki is a persistent, compounding artifact"——知识库是持续增长的制品，不是每次用完就扔的东西。这和传统的 RAG（每次查询都去重新检索原始文档）不一样：wiki 由 LLM 维护，知识被<em>编译</em>进去一次，下次直接用，越积越厚。</p>
+      <p>值得一提的是，他的精神前身指的是 Vannevar Bush 在 1945 年构想的 Memex——一台帮人管理个人资料的机器。Karpathy 说："The part he couldn't solve was who does the maintenance"——而现在，LLM 解决了这个维护难题。</p>
+      <div class="box box-warn">
+        <p class="box-title">⚠️ 归因说明</p>
+        <p>「第二大脑 / Building a Second Brain（BASB）」是 Tiago Forte 的方法论与品牌，与 Karpathy 无关。社区在二次传播时常把 Karpathy 的 LLM wiki 贴上「second brain」标签，但那是社区的叫法，不是他本人的措辞。本章用「第二大脑」作为熟悉的伞状标题，但归属按事实说清楚。（Karpathy 原推因 X.com 需登录无法直接核实全文，原话引述来自经核实的 Gist 原文及可信二次来源。）</p>
+      </div>
+
+      <h3>最小形态：一个 <code>~/brain/</code> 文件夹就够了</h3>
+      <p>别被「知识库」这三个字吓到。在技术上，第二大脑最小的形态就是：</p>
+      <ul>
+        <li>你磁盘上的<strong>一个文件夹</strong>，比如 <code>~/brain/</code></li>
+        <li>里面全是 <strong><code>.md</code> 文件</strong>（Markdown 格式，纯文本，第 5 章你已经很熟了）</li>
+        <li>Claude Code 能直接读写这个文件夹——<strong>不需要安装任何额外的东西</strong></li>
+      </ul>
+      <p>就这样。你现在就能开始——不需要下载任何 app，不需要注册任何账号，不需要配置任何东西。先把库建起来、把 agent 用起来，其他的都可以之后再说。</p>
+
+      <h3>Obsidian：可选的增强层（不装也行）</h3>
+      <p><span class="term">Obsidian（本地知识管理应用）</span>是一个可以让这个文件夹变得更好用的 app——但它完全是可选的。</p>
+      <p>Obsidian 的关键事实：</p>
+      <ul>
+        <li>官网原文：<em>"Obsidian stores your notes locally as plain text Markdown files"</em>——它不改变你的文件格式，vault（库）就是磁盘上的一个普通文件夹。</li>
+        <li>你在 <code>~/brain/</code> 上打开 Obsidian，就能多出<span class="term">双向链接（bidirectional links）</span>、<span class="term">图谱视图（graph view）</span>和 1000+ 社区插件——但底层的 <code>.md</code> 文件完全不变，Claude Code 照样能读写。</li>
+        <li>官网原文：<em>"you're never locked in. You own your data for the long term."</em> — 没有供应商锁定，文件永远是你的。</li>
+        <li>个人使用核心功能<strong>完全免费</strong>；可选付费同步。</li>
+        <li>支持 macOS / Windows / Linux / iOS / Android。</li>
+      </ul>
+      <p>一句话总结 Obsidian 的定位：<strong>Claude Code 是写手，Obsidian 是书架上的导航系统</strong>——写手能独立工作，但有导航系统更好找书。装不装，取决于你是否需要可视化那张笔记网络图。不装的话，<code>~/brain/</code> 文件夹照样运转。</p>
+
+      <h3>示例②③ 在这里汇流</h3>
+      <p>前几章你一直在跑两条线：</p>
+      <ul>
+        <li><strong>示例①</strong>：Physics 笔记 → HTML → GitHub Pages（Ch5 完成）</li>
+        <li><strong>示例②</strong>：第二大脑——用 Obsidian + Claude 共建知识库（本章起步）</li>
+        <li><strong>示例③</strong>：机械工程（mechanical engineering）兴趣拓展</li>
+      </ul>
+      <p>从这一章开始，<strong>示例② 和 ③ 在同一个库里汇流</strong>：</p>
+      <ul>
+        <li>Physics 笔记沉淀进 <code>~/brain/physics/</code>——和 Ch5 发出去的网页互为补充，一个公开展示、一个私下积累</li>
+        <li>机械工程兴趣探索的笔记进 <code>~/brain/mechanical/</code></li>
+        <li>两个文件夹都住在同一个 <code>~/brain/</code> 库里，Claude Code 可以跨文件夹检索、整合、建立联系</li>
+      </ul>
+      <p>以后你每次学到新东西——不管是 Physics 课、还是看了一个关于涡轮发动机的视频——都可以让 agent 帮你整理、沉淀进对应的文件夹。知识库会越来越厚，而维护的成本几乎为零。</p>
+
+      <div class="box box-do">
+        <p class="box-title">🙌 跟我做 · 建库，沉淀第一条笔记</p>
+        <p><strong>第一步：建立 <code>~/brain/</code> 及子文件夹</strong></p>
+        <p>在 terminal 里运行：</p>
+        <pre><code>mkdir -p ~/brain/physics ~/brain/mechanical</code></pre>
+        <p>这一行就把整个库架构建好了：<code>~/brain/</code> 是根目录，两个子文件夹分别对应两条兴趣线。</p>
+
+        <p><strong>第二步：进入库，启动 Claude Code</strong></p>
+        <pre><code>cd ~/brain
+claude</code></pre>
+
+        <p><strong>第三步：让 agent 把一条 Physics 要点沉淀进来</strong></p>
+        <p>在 Claude Code 对话里输入（context 交代清楚）：</p>
+        <pre><code>我在学 Physics（O-level），刚学完「牛顿三大运动定律」这个主题。
+请帮我在 physics/newton-laws.md 里写一份简洁的知识点总结：
+- 三条定律各用一句中文写清楚核心
+- 每条附一个生活化例子
+- 文件顶部加一行 # 标题和今天的日期</code></pre>
+        <p>Claude Code 会创建 <code>~/brain/physics/newton-laws.md</code> 并写入内容。它动手前会告诉你计划，确认没问题就让它继续。</p>
+
+        <p><strong>第四步：试试机械工程方向</strong></p>
+        <p>接着在同一个对话里输入：</p>
+        <pre><code>我对机械工程感兴趣，特别是内燃机（internal combustion engine）的工作原理。
+请帮我在 mechanical/internal-combustion-engine.md 里写一份入门笔记：
+- 四冲程循环（进气、压缩、做功、排气）各一句话说清楚
+- 和 Physics 里「功和能」的联系点一下
+- 文件顶部加标题和日期</code></pre>
+        <p>看到 <code>~/brain/mechanical/internal-combustion-engine.md</code> 被创建，示例②③就在这一刻在同一个库里汇流了。</p>
+
+        <p><strong>第五步：验收 + 检索</strong></p>
+        <p>在对话里问 agent：</p>
+        <pre><code>帮我列出 brain 库里目前有哪些笔记，每个文件一行，写出文件路径和首行标题</code></pre>
+        <p>它会用 <code>find</code> 或 <code>ls</code> 帮你扫一遍库，返回索引。这就是 Karpathy 说的「检索」——不是问 AI 一个问题然后忘掉，而是去你自己积累的知识库里找已经整理好的答案。</p>
+      </div>
+
+      <div class="box box-core">
+        <p class="box-title">🧠 心法回扣 · 持久制品 vs. 一次性对话</p>
+        <p>Ch0 说的「上下文→产出→eval→修正」闭环，在这里有了新维度：产出不只是一个回答，而是一份<strong>持久留在磁盘上的笔记</strong>。每一次对话都在往库里添砖——Karpathy 的原话是「compounding artifact（复利制品）」。对话窗口关了，知识还在。下次你问任何关于内燃机的问题，可以先说「去看我 ~/brain/mechanical/ 里的笔记」，给 agent 上下文，得到的答案会更贴合你已有的知识框架。</p>
+        <p>这也是为什么 Obsidian 的那条类比这么准：<strong>Obsidian 是 IDE，LLM 是程序员，wiki 是代码库</strong>。你维护代码库，程序员往里写代码，IDE 帮你看清结构——三者各司其职。</p>
+      </div>
+
+      <div class="box box-summary">
+        <p class="box-title">小结</p>
+        <ul>
+          <li>「第二大脑」这个叫法来自 Tiago Forte（BASB）；Karpathy 提出的是「LLM wiki」模式——两者理念相近，归属不同，本章并列介绍。</li>
+          <li>最小形态就是 <code>~/brain/</code> 一个 Markdown 文件夹——Claude Code 能直接读写，不需要安装任何东西就能开始。</li>
+          <li>Obsidian 是可选的增强层，在同一个文件夹上加双链、图谱和插件，底层文件格式不变，可选，不装也行。</li>
+          <li>示例②（第二大脑）和③（机械工程兴趣）在 <code>~/brain/</code> 汇流：Physics 进 <code>physics/</code>、机械工程进 <code>mechanical/</code>，Claude Code 跨文件夹管理整个库。</li>
+        </ul>
+        <p><strong>一句话回顾：</strong>第二大脑的本质是一个 <code>~/brain/</code> 文件夹——AI 当维护员，你负责提供素材和审阅，知识越积越厚，不会因为对话窗口关掉而消失。</p>
+      </div>
+    </section>
     <section id="ch7" class="chapter"><h2>7 · MCP 与 Skills</h2></section>
     <section id="ch8" class="chapter"><h2>8 · 触类旁通：其他 harness</h2></section>
     <section id="ch9" class="chapter"><h2>9 · 用例画廊</h2></section>
