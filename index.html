@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>从 LLM 到 Agent · 给弟弟的上手笔记</title>
   <link rel="stylesheet" href="styles.css">
+  <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 </head>
 <body>
   <button id="nav-toggle" aria-label="目录">☰ 目录</button>
+  <button id="theme-toggle" aria-label="切换深色 / 浅色模式" title="切换深色 / 浅色">🌙</button>
   <nav id="toc">
     <p class="site-title">从 LLM 到 Agent</p>
     <a class="toc-link" href="#ch0">0 · 心法先行</a>
@@ -55,7 +57,7 @@
 
       <h3>主线心法：四步闭环</h3>
       <p>这套「带实习生」的节奏，拆开就是贯穿全书的<strong>四步闭环</strong>。每次让 AI 干活，都在转这个圈：</p>
-      <div style="border:1px solid var(--rule); border-radius:10px; padding:18px 16px; margin:18px 0; background:#fff">
+      <div style="border:1px solid var(--rule); border-radius:10px; padding:18px 16px; margin:18px 0; background:var(--panel)">
         <div style="display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; justify-content:center; text-align:center; font-size:15px">
           <div style="flex:1 1 120px; min-width:110px; border:2px solid var(--core); border-radius:8px; padding:10px 8px; background:var(--core-bg)">
             <strong>① 交代 context</strong><br><span style="color:var(--muted)">讲清背景、给齐材料</span>
@@ -392,9 +394,9 @@ rm ~/study/physics-notes/raw/2026-week3-bak.md</code></pre>
 
       <h3>Claude Code 的 agentic loop：读→想→动手→再读</h3>
       <p>你下达一个任务之后，Claude Code 不是一次性甩给你答案，而是进入一个循环——官方叫它三阶段（gather context → take action → verify results），映射到你能感受到的节奏就是：</p>
-      <div style="border:1px solid var(--rule); border-radius:10px; padding:18px 16px; margin:18px 0; background:#fff">
+      <div style="border:1px solid var(--rule); border-radius:10px; padding:18px 16px; margin:18px 0; background:var(--panel)">
         <div style="display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; justify-content:center; text-align:center; font-size:15px">
-          <div style="flex:1 1 110px; min-width:100px; border:2px solid var(--link); border-radius:8px; padding:10px 8px; background:#edf2fb">
+          <div style="flex:1 1 110px; min-width:100px; border:2px solid var(--link); border-radius:8px; padding:10px 8px; background:var(--link-bg)">
             <strong>① 读</strong><br><span style="color:var(--muted); font-size:13px">gather context<br>读你的文件和问题</span>
           </div>
           <div style="align-self:center; color:var(--muted); font-weight:700">→</div>
