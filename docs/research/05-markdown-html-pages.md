@@ -148,8 +148,9 @@ gh auth login
 - **不勾「Add a README file」（建空仓库）** —— 教学选定路径。原因：若勾了 README，远端就有一次本地没有的提交，本地 `git init` 后直接 `git push` 会被拒（non-fast-forward / unrelated histories）。建空仓库则 `git init → add → commit → push` 一气呵成，对新手最不易卡。
 - 点击「Create repository」
 
-**Step 2：上传 / 推送文件（本章选定：空仓库 + 本地 git init 路径）**
-- 选定路径（针对上面的空仓库）：在本地项目目录依次 `git init`、`git add`、`git commit -m "..."`、`git branch -M main`、`git remote add origin https://github.com/<用户名>/physics-notes.git`、`git push -u origin main`。这是 GitHub 新建空仓库页面给出的标准 "…or push an existing repository from the command line" 序列。配合上面 `gh auth login` 已存好凭据，push 不需输密码。
+**Step 2：上传 / 推送文件（本章选定：空仓库 + 从 site/ 子目录 git init 路径）**
+- **关键：从 `site/` 子目录推送**，使生成的 `index.html` 落在仓库根（repo root）。原因：GitHub Pages「Deploy from a branch」的文件夹只能选 `/(root)` 或 `/docs`，**不能选 `/site`**；若把整个 `physics-notes/` 推上去、`index.html` 在 `site/` 子目录下，配 `/(root)` 会 404。故本章 `cd ~/study/physics-notes/site` 后再 `git init`，仓库根就是 `index.html`，配 `/(root)` 正确解析为 `https://<用户名>.github.io/physics-notes/`。附带好处：`raw/` 草稿不进公开仓库。
+- 命令序列（在 `~/study/physics-notes/site` 内）：`git init`、`git add index.html`、`git commit -m "..."`、`git branch -M main`、`git remote add origin https://github.com/<用户名>/physics-notes.git`、`git push -u origin main`。这是 GitHub 新建空仓库页面给出的标准 "…or push an existing repository from the command line" 序列。配合 `gh auth login` 已存好凭据，push 不需输密码。
 - 方式 B（完全不想碰命令行）：仓库页 **Add file** → **Upload files** → 拖入 `site/index.html` → Commit changes。
 
 **Step 3：在 Settings 开启 Pages**

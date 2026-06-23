@@ -589,7 +589,7 @@ claude</code></pre>
         <p class="box-title">⚠️ 那几个「省心但危险」的模式，别乱开</p>
         <p>除了上面三个，还有几个需要特殊开启的模式，越往后越「省心」、也越<strong>容易让你把方向盘整个交出去</strong>——这正是 Ch0 第一个坑：</p>
         <ul>
-          <li><code>auto</code>（自动模式）——几乎什么都不问你、自己往下跑（有后台安全检查）。适合你确实信任的长任务，但代价是你看到的 eval 检查点变少了。</li>
+          <li><code>auto</code>（自动模式）——几乎什么都不问你、自己往下跑（有后台安全检查）。适合你确实信任的长任务，但代价是你看到的 eval 检查点变少了。（官方目前标为 research preview、还需较新版本，新手先不用碰。）</li>
           <li><code>dontAsk</code>——只对你<strong>事先在规则里允许过</strong>的操作不再追问，其余照样拦；多用于自动化 / 流水线场景，新手用不上。（连同上面 <code>auto</code>、下面 <code>bypassPermissions</code>，就是前面说的「6 个模式」里日常用不到的那 3 个。）</li>
           <li><code>bypassPermissions</code>（跳过所有检查）——<strong>顾名思义，所有权限确认全部跳过，连受保护的路径都直接动。</strong>官方建议它<strong>只在隔离的容器 / 虚拟机里用</strong>。在你自己的 Mac 上、对着你真实的文件，<strong>不要开它</strong>。一时图省事跳过所有确认，等于把那个「不了解你全部心思的实习生」单独留在你家里、还把所有抽屉钥匙给了他。</li>
         </ul>
@@ -774,16 +774,16 @@ claude</code></pre>
         <p><strong>第一步：在 GitHub 创建仓库（repository）</strong></p>
         <p>登录 github.com，点右上角 <strong>+</strong> → <strong>New repository</strong>，仓库名填 <code>physics-notes</code>，选 <strong>Public</strong>，<strong>「Add a README file」不要勾</strong>（建一个空仓库，下一步本地推上去才不会冲突），点「Create repository」。</p>
 
-        <p><strong>第二步：把本地文件夹和 GitHub 仓库关联，推送</strong></p>
-        <p>回到 terminal，在 <code>~/study/physics-notes</code> 目录里依次运行：</p>
-        <pre><code>cd ~/study/physics-notes
+        <p><strong>第二步：把网页文件夹和 GitHub 仓库关联，推送</strong></p>
+        <p>关键点：我们只把<strong>做好的网页那个文件夹</strong>（<code>site/</code>）推上去，让 <code>index.html</code> 正好落在仓库的<strong>最顶层</strong>——这样下一步 GitHub Pages 才找得到它（你的 <code>raw/</code> 草稿笔记留在本地，不用公开）。回到 terminal，依次运行：</p>
+        <pre><code>cd ~/study/physics-notes/site
 git init
-git add site/index.html
+git add index.html
 git commit -m "add physics notes site"
 git branch -M main
 git remote add origin https://github.com/&lt;你的用户名&gt;/physics-notes.git
 git push -u origin main</code></pre>
-        <p>把 <code>&lt;你的用户名&gt;</code> 替换成你真实的 GitHub 用户名。如果 <code>gh auth login</code> 已经完成，push 时不需要输入密码。</p>
+        <p>把 <code>&lt;你的用户名&gt;</code> 替换成你真实的 GitHub 用户名。如果 <code>gh auth login</code> 已经完成，push 时不需要输入密码。（注意第一行 <code>cd</code> 进的是 <code>site</code> 子文件夹，不是上一层。）</p>
 
         <p><strong>第三步：在 GitHub 仓库设置里开启 Pages</strong></p>
         <ol>
@@ -963,7 +963,7 @@ claude</code></pre>
         <p class="box-title">小结</p>
         <ul>
           <li><strong>MCP</strong>：AI 的 USB-C 接口——统一规格，让 Claude 连上任意外部系统（文件、数据库、日历……）。</li>
-          <li><strong>Skills</strong>：把重复用的指令/流程打包成一个可随时调用的「专长」，放在项目的 <code>.claude/</code> 目录里。</li>
+          <li><strong>Skills</strong>：把重复用的指令/流程打包成一个可随时调用的「专长」，放在项目的 <code>.claude/skills/</code> 目录里。</li>
           <li><strong>Subagents</strong>：专门处理侧任务的子智能体，跑在独立上下文里，只汇报结果。</li>
           <li><strong>Hooks</strong>：在 Claude Code 的特定节点自动触发的脚本，用来自动化和把关。</li>
         </ul>
