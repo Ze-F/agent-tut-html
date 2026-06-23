@@ -1,6 +1,6 @@
-# Research Notes: Ch1 · 两种界面各管什么
+# Research Notes: Ch1 · 三层界面各管什么
 
-查证日期: 2026-06-23
+查证日期: 2026-06-23（更新：Claude Cowork 三层模型补充）
 
 ---
 
@@ -66,7 +66,47 @@ Claude Cowork 官方说明: "Claude Cowork handles tasks autonomously. Give it a
 
 ---
 
-## 5. GitHub / 云盘备份做法
+## 5. Claude Cowork — 官方名称、能力、平台、访问档位
+
+### 5a. 什么是 Claude Cowork
+
+**来源:** https://www.anthropic.com/product/claude-cowork  
+已 WebFetch: 是  
+查证日期: 2026-06-23  
+官方引用: "Claude Cowork handles tasks autonomously. Give it a goal and Claude works on your computer, local files, and applications to return a finished deliverable."  
+官方引用: "Point Claude at a folder of drafts, downloads, and attachments and ask it to rename, sort, deduplicate, or surface what's relevant"  
+官方引用（访问）: "available on all paid plans through the Claude desktop app"
+
+**来源:** https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork  
+已 WebFetch: 是  
+查证日期: 2026-06-23  
+官方引用: "Claude Cowork uses the same agentic architecture that powers Claude Code, now accessible within Claude Desktop and without opening the terminal."  
+官方引用（本地文件）: "read from and write to your local files without manual uploads or downloads"；"deliver finished outputs directly to your file system."  
+官方引用（terminal）: 无需命令行——"directly on your computer" through Claude Desktop, "without opening the terminal"  
+官方引用（平台限制）: "Cowork requires the desktop app for macOS or Windows and is not available on web or mobile."  
+官方引用（支持计划）: "paid plans (Pro, Max, Team, Enterprise) only"
+
+**来源:** https://support.claude.com/en/articles/13455879-use-claude-cowork-on-team-and-enterprise-plans  
+已 WebFetch: 是  
+查证日期: 2026-06-23  
+引用（Windows）: "Windows users: Cowork requires the latest version of Claude for Windows."
+
+### 5b. Cowork 与 Claude Code 的关系
+
+同一套 agentic 引擎（官方原话：same agentic architecture that powers Claude Code）。  
+区别：Cowork 在 Claude Desktop GUI 里运行，无需 terminal；Claude Code 在 terminal / CLI 里运行，有更多编程/自动化/发布能力。  
+定位口径：Cowork 是非技术用户"让 agent 动本地文件"的零 terminal 入口；Claude Code 是毕业到更强控制力的下一层。
+
+### 5c. 平台与访问门槛（核实汇总）
+
+- **平台：** macOS（Claude Desktop）和 Windows（Claude Desktop），不支持网页端或手机端
+- **付费要求：** Pro、Max、Team、Enterprise 均可用；免费档不可用
+- **research preview / beta：** 官方页面未提及 research preview 状态（2026-06-23 核实时，产品已正式上线 GA）
+- **以官网为准：** 如价格档位或功能有变化，以 anthropic.com/product/claude-cowork 和 support.claude.com 为准
+
+---
+
+## 6. GitHub / 云盘备份做法
 
 本章不深入展开（第 5 章再详细），仅作为 CLI 工作流的配套提及。无需专项核实，使用通用表述即可。
 
@@ -78,5 +118,6 @@ Claude Cowork 官方说明: "Claude Cowork handles tasks autonomously. Give it a
 |------|---------|------|------------|
 | 网络搜索+多步研究 | Research | support.claude.com/11088861 | 是 |
 | 交互产出/可视化/迷你页 | Artifacts | support.claude.com/9487310 | 是 |
+| 桌面端 agent（零 terminal 碰本地文件） | Claude Cowork | anthropic.com/product/claude-cowork + support.claude.com/13345190 | 是 |
 | 命令行 agent | Claude Code | claude.com/product/claude-code | 是 |
 | claude.ai 网页 | Claude (web) | claude.com/product/overview | 是 |
