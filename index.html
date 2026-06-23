@@ -666,7 +666,167 @@ claude</code></pre>
         <p><strong>一句话回顾：</strong>把心法用熟，就是把两件事做扎实——用 <code>CLAUDE.md</code> 和清楚的指令<strong>喂高质量 context</strong>，用 <code>/diff</code> 和权限模式<strong>做真正的 eval</strong>；中间 AI 动手，方向盘始终在你手上。</p>
       </div>
     </section>
-    <section id="ch5" class="chapter"><h2>5 · 让产出沉淀</h2></section>
+    <section id="ch5" class="chapter">
+      <h2>5 · 让产出沉淀</h2>
+
+      <p class="why"><strong>为什么要学这个：</strong>Ch3 你让 Claude Code 把 <code>raw/2026-week3.md</code> 整理好了，Ch4 你学会了怎么把心法用扎实。但整理好的笔记还只是你自己电脑里的一个文件——关了 terminal、换了 Mac，什么都带不走；更别说分享给同学复习。这一章，我们把产出「沉淀」成真正耐用、随时随地可用的形态：先把 Markdown 变成一个 <strong>HTML 网页</strong>，再用 <strong>GitHub Pages</strong> 发到网上，得到一条任何设备都能打开的链接。这是主线示例①的最后一步——从「课堂笔记」到「网页（HTML）」到「发布到 GitHub Pages」，全部跑通。</p>
+
+      <h3>Markdown 速览</h3>
+      <p><span class="term">Markdown（标记语言）</span>是一种用纯文本符号来表示格式的写法。你写的时候只是普通文字 + 几个符号，渲染出来就有标题、加粗、列表。Ch3 整理好的笔记就是 Markdown 格式——现在先花两分钟把它认清楚，后面理解「为什么 AI 喜欢它」就更自然了。</p>
+
+      <p>核心语法只有几条（来自 GitHub 官方 Markdown 文档）：</p>
+      <pre><code># 一级标题（最大）
+## 二级标题
+### 三级标题
+
+**这是加粗文字**
+
+- 无序列表项 A
+- 无序列表项 B
+
+1. 有序列表第一项
+2. 有序列表第二项
+
+[链接文字](https://pages.github.com/)
+
+Use `git status` 行内代码就这样写</code></pre>
+
+      <div class="box box-do">
+        <p class="box-title">🙌 跟我做 · 写一小段 Markdown</p>
+        <p>打开 terminal，用 Claude Code 在你的 Physics 笔记 workspace 里随手写一小段 Markdown：</p>
+        <pre><code>cd ~/study/physics-notes
+claude</code></pre>
+        <p>进入对话后，输入：</p>
+        <pre><code>帮我在 raw/ 文件夹里新建一个 sample.md，内容包含：
+一个二级标题「测试 Markdown」、一句加粗的定义、一个三项无序列表、
+以及一行行内代码示例。</code></pre>
+        <p>它生成完，你用 Finder 打开 <code>raw/sample.md</code> 看一眼，确认五种语法都在里面。这个文件只是练手，不影响正式笔记。</p>
+      </div>
+
+      <h3>为什么 Markdown / HTML 是 AI 时代的通用格式</h3>
+      <p>Word、Keynote、Pages 这些工具每个人都用过——但在 AI 工作流里，它们其实是「麻烦的格式」。下面几点说清楚为什么 Markdown 和 HTML 会成为通用选择（以下为基于事实的合理陈述，不夸大）：</p>
+      <ul>
+        <li><strong>纯文本，AI 可直接读写。</strong>Markdown 文件是 <code>.md</code> 文本文件，Claude Code 无需插件即可生成、编辑、搜索。Word / PDF 要转换才能处理。</li>
+        <li><strong>版本控制（version control）友好，可以 diff。</strong>纯文本文件在 <span class="term">git（版本控制系统）</span>里可以逐行追踪改动；Word、Keynote 这类二进制文件做不到这点。</li>
+        <li><strong>Markdown → HTML 的管道成熟。</strong>把 Markdown 转成 HTML 的工具（如 Pandoc、marked.js 等）已经标准化，Claude Code 可以直接输出 HTML 文件，浏览器打开不需要本地服务器。</li>
+        <li><strong>GitHub Pages 原生支持。</strong>GitHub 可以把 <code>.md</code> 或 <code>.html</code> 文件直接发布成网站，学习成本极低，是这一章要用到的路径。</li>
+      </ul>
+      <p>一句话总结：Markdown 让 AI 写得顺、人看得清、git 管得住；HTML 让浏览器渲染出来、GitHub Pages 发出去。两个格式接在一起，就是「能 AI 处理 + 能上网发布」的最短路径。</p>
+
+      <div class="box box-do">
+        <p class="box-title">🙌 跟我做 · 让 Claude Code 把整理好的笔记转成 HTML</p>
+        <p>Ch3 你整理好了 <code>raw/2026-week3.md</code>。现在让 Claude Code 把它变成一个 HTML 网页，保存到 <code>site/index.html</code>。</p>
+        <p><strong>第一步：进项目目录，启动 Claude Code</strong></p>
+        <pre><code>cd ~/study/physics-notes
+claude</code></pre>
+        <p><strong>第二步：在对话里输入这段指令</strong>（context 交代清楚）：</p>
+        <pre><code>raw/2026-week3.md 是我整理好的 Physics 笔记（Markdown 格式，O-level 水平）。
+请把它转换成一个独立的 HTML 文件，保存到 site/index.html。
+要求：
+- 有完整的 html/head/body 结构，能直接用浏览器打开
+- 标题、加粗、列表、行内代码都要正确渲染
+- 加一点基础 CSS 让它好看一点（浅色背景、有字体大小层级）
+- 不要依赖任何外部 CDN 或 JS 库，纯 HTML + 内联 CSS</code></pre>
+        <p>Claude Code 会读 Markdown 文件、生成 HTML、写入 <code>site/index.html</code>。完成后，它可能会请求确认写入操作——看一眼它说打算做什么，没问题就确认。</p>
+        <p><strong>验收：</strong>在 Finder 里找到 <code>~/study/physics-notes/site/index.html</code>，双击用浏览器打开，确认笔记内容正确渲染。这就是你的 eval 步骤——看起来哪里不对，继续在对话里说，让它改。</p>
+      </div>
+
+      <h3>把产出推上 GitHub</h3>
+      <p>有了 <code>site/index.html</code>，下一步是把它推到 <span class="term">GitHub（代码托管平台）</span>上，然后用 <span class="term">GitHub Pages（静态网站托管服务）</span>发布成一个真实的网址。这一段是整章最容易卡住的地方，所以我们一步一步来，把每个可能的坑都踩平。</p>
+
+      <div class="box box-warn">
+        <p class="box-title">⚠️ 注意 · 先把 GitHub 账号和 git 认证一次配好</p>
+        <p>推代码到 GitHub 需要两样东西：本地有 <strong>git</strong>、并且 GitHub 知道「这台 Mac 是你的」（即认证 / authentication）。一次配好，以后每次 push 都不用重复。</p>
+
+        <p><strong>第一步：检查 git 是否已安装</strong></p>
+        <p>在 terminal 输入：</p>
+        <pre><code>git --version</code></pre>
+        <p>如果输出一个版本号（如 <code>git version 2.x.x</code>），说明 git 已经就绪，跳到第二步。</p>
+        <p>如果 macOS 弹出一个提示框，问你要不要安装「Command Line Tools」，点「安装」就行——整个过程约 5 分钟，不需要额外配置。也可以手动触发这个安装提示：</p>
+        <pre><code>xcode-select --install</code></pre>
+        <p>（注：macOS 的 <code>/usr/bin/git</code> 本身是一个占位符，实际指向 Xcode Command Line Tools。在全新 Mac 上第一次运行 <code>git</code> 时，macOS 通常会自动弹框提示安装。Apple 官方文档没有在本章研究中被直接验证，上述行为基于 Apple Developer Forums 记录——建议直接运行命令、看 macOS 的实际提示为准。）</p>
+
+        <p><strong>第二步：注册 GitHub 账号</strong>（如果还没有）</p>
+        <p>去 <a href="https://github.com" target="_blank">github.com</a> 注册一个免费账号。用户名会出现在你未来的 Pages 网址里（<code>https://&lt;用户名&gt;.github.io/physics-notes/</code>），选一个你满意的。</p>
+
+        <p><strong>第三步：安装并登录 GitHub CLI（<code>gh</code>）</strong></p>
+        <p>推荐这条路径，原因是：<code>gh auth login</code> 选 HTTPS 并回答 Yes 之后，会<strong>自动帮你存好 git 的认证信息</strong>，后续 <code>git push</code> 不再需要输入密码或配置 SSH key。对比网页拖拽上传（每次繁琐、不支持 push）和 GitHub Desktop（依赖图形界面、命令行技能无法迁移），<code>gh</code> 是新手上 terminal 最省事的认证路径。</p>
+        <p>如果还没装 Homebrew（macOS 的包管理器），先装它：</p>
+        <pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+        <p>然后安装 GitHub CLI：</p>
+        <pre><code>brew install gh</code></pre>
+        <p>安装完成后，运行登录命令：</p>
+        <pre><code>gh auth login</code></pre>
+        <p>它会问你几个问题，按下面选：</p>
+        <ul>
+          <li>选择平台 → <strong>GitHub.com</strong></li>
+          <li>选择协议 → <strong>HTTPS</strong>（推荐新手，不需要 SSH key）</li>
+          <li>「Authenticate Git with your GitHub credentials?」→ <strong>Yes</strong></li>
+          <li>选择认证方式 → <strong>Login with a web browser</strong></li>
+          <li>复制屏幕上出现的一次性代码，浏览器会自动打开，粘贴代码，点击授权</li>
+        </ul>
+        <p>完成后，<code>git push</code> 就再也不需要输入密码了。这一步只需要做一次。</p>
+      </div>
+
+      <div class="box box-do">
+        <p class="box-title">🙌 跟我做 · 推上 GitHub、开 Pages、得到你的专属链接</p>
+
+        <p><strong>第一步：在 GitHub 创建仓库（repository）</strong></p>
+        <p>登录 github.com，点右上角 <strong>+</strong> → <strong>New repository</strong>，仓库名填 <code>physics-notes</code>，选 <strong>Public</strong>，勾选「Add a README file」，点「Create repository」。</p>
+
+        <p><strong>第二步：把本地文件夹和 GitHub 仓库关联，推送</strong></p>
+        <p>回到 terminal，在 <code>~/study/physics-notes</code> 目录里依次运行：</p>
+        <pre><code>cd ~/study/physics-notes
+git init
+git add site/index.html
+git commit -m "add physics notes site"
+git branch -M main
+git remote add origin https://github.com/&lt;你的用户名&gt;/physics-notes.git
+git push -u origin main</code></pre>
+        <p>把 <code>&lt;你的用户名&gt;</code> 替换成你真实的 GitHub 用户名。如果 <code>gh auth login</code> 已经完成，push 时不需要输入密码。</p>
+
+        <p><strong>第三步：在 GitHub 仓库设置里开启 Pages</strong></p>
+        <ol>
+          <li>打开 github.com 上的 <code>physics-notes</code> 仓库页面</li>
+          <li>点顶部导航栏的 <strong>Settings</strong></li>
+          <li>左侧边栏「Code and automation」分区下，点 <strong>Pages</strong></li>
+          <li>在「Build and deployment」→「Source」下拉菜单，选 <strong>Deploy from a branch</strong></li>
+          <li>在「Branch」下拉菜单，选 <strong>main</strong></li>
+          <li>在文件夹下拉菜单，选 <strong>/(root)</strong></li>
+          <li>点 <strong>Save</strong></li>
+        </ol>
+
+        <p><strong>第四步：等待发布，访问你的网站</strong></p>
+        <p>发布最多需要约 10 分钟。稍等片刻后，回到 Settings → Pages 页面，会出现「Visit site」按钮。你的 Physics 笔记网页地址是：</p>
+        <pre><code>https://&lt;你的用户名&gt;.github.io/physics-notes/</code></pre>
+        <p>把 <code>&lt;你的用户名&gt;</code> 换成你的 GitHub 用户名，在浏览器里打开——如果能看到渲染好的笔记，主线示例①就全部跑通了。</p>
+      </div>
+
+      <h3>示例①走完了——随时随地复习</h3>
+      <p>回顾一下这条线走过的路：Ch1 你在 claude.ai 网页里初步整理了一段 <code>2026-week3</code> 笔记；Ch3 你把它放进 <code>~/study/physics-notes/</code>，让 Claude Code 在 terminal 里帮你整理成干净的 Markdown；Ch4 你学会了怎么把心法用扎实，context 喂好、eval 做到位；现在，<code>site/index.html</code> 已经发布到 GitHub Pages——</p>
+      <p><strong>你有了一条永久链接，任何设备、任何地方都能打开。</strong>考前在图书馆、坐地铁、或者发给同学一起复习，一条链接就够了。笔记不再只活在你的 Mac 里，而是真正「沉淀」成了可分享的产出。</p>
+      <p>以后每次整理新的笔记，流程也一样：Claude Code 整理 → 转 HTML → <code>git push</code>，网页自动更新。</p>
+
+      <div class="box box-core">
+        <p class="box-title">🧠 心法回扣 · 「沉淀」是把产出接上世界</p>
+        <p>Ch0 的心法是四步闭环：交代 context → 产出 → eval → 修正。这一章把「产出」这一步做到了底——不是产出一个临时文件，而是产出一个能被世界访问的页面。</p>
+        <p>Markdown 让 AI 写得顺；HTML 让浏览器渲染得出来；git 让你改动有记录；GitHub Pages 让任何人都能访问。这四层叠在一起，<strong>你的笔记就从「本地草稿」变成了「可维护的作品」</strong>。</p>
+        <p>同样的道理适用于任何产出：AI 帮你生成的东西，如果只活在对话窗口里，窗口一关就消失了；只有沉淀进文件、进版本控制、进公开发布，产出才真正属于你。</p>
+      </div>
+
+      <div class="box box-summary">
+        <p class="box-title">小结</p>
+        <ul>
+          <li><strong>Markdown：</strong>纯文本 + 符号 = 有格式的文档；AI 可直接读写、git 可 diff、Markdown → HTML 管道成熟。</li>
+          <li><strong>让 Claude Code 转 HTML：</strong>在 <code>~/study/physics-notes</code> 目录里说清楚需求，它读 <code>raw/2026-week3.md</code>、输出 <code>site/index.html</code>；你 eval 验收，觉得有问题继续在对话里改。</li>
+          <li><strong>git 配置：</strong>先 <code>git --version</code> 验证是否已装；没装时 macOS 通常会弹框提示安装 Command Line Tools，也可手动运行 <code>xcode-select --install</code>。</li>
+          <li><strong>GitHub 认证推荐路径：</strong><code>brew install gh</code> → <code>gh auth login</code>（选 HTTPS → Yes → 浏览器授权）；一次配好，自动存好 git 凭据，之后 <code>git push</code> 免密码。</li>
+          <li><strong>GitHub Pages 开启：</strong>建仓库 <code>physics-notes</code>（Public）→ push → Settings → Pages → Deploy from a branch → main → /(root) → Save；约 10 分钟后访问 <code>https://&lt;用户名&gt;.github.io/physics-notes/</code>。</li>
+          <li><strong>主线示例①完成：</strong>课堂笔记 → 网页（HTML）→ 发布到 GitHub Pages，随时随地复习，一条链接分享给任何人。</li>
+        </ul>
+        <p><strong>一句话回顾：</strong>Markdown 让 AI 生成内容、HTML 让浏览器显示、git push 让 GitHub Pages 发布上线——把这三步串起来，你的笔记就从本地草稿变成了随时随地可访问的网页。</p>
+      </div>
+    </section>
     <section id="ch6" class="chapter"><h2>6 · 第二大脑</h2></section>
     <section id="ch7" class="chapter"><h2>7 · MCP 与 Skills</h2></section>
     <section id="ch8" class="chapter"><h2>8 · 触类旁通：其他 harness</h2></section>
