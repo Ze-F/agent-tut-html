@@ -971,7 +971,69 @@ claude</code></pre>
       </div>
     </section>
     <section id="ch8" class="chapter"><h2>8 · 触类旁通：其他 harness</h2></section>
-    <section id="ch9" class="chapter"><h2>9 · 用例画廊</h2></section>
+    <section id="ch9" class="chapter">
+      <h2>9 · 用例画廊（抛砖引玉）</h2>
+
+      <p class="why"><strong>为什么要看这个：</strong>你现在已经把四步闭环——交代 context → 产出 → eval 验收 → 修正——练了九章。这最后一章不教新命令，只做一件事：帮你看见这套心法能用在哪些地方，远不止整理 Physics 笔记。想法播下去，剩下的靠你自己长出来。</p>
+
+      <h3>心法能去的地方</h3>
+      <p>下面每张卡片是一个可以迁移的场景。它们都是<strong>设想</strong>——不是"按这个步骤操作"的教程，而是"你有一天可以这么玩"的想象。每张卡只说一件事：四步闭环在这个场景里是怎么转的。</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin:20px 0">
+
+        <div class="box" style="border-radius:10px; padding:18px 16px">
+          <p class="box-title">🎓 学业 / 职业 / 生活 counseling</p>
+          <p>你在纠结选科、选 CCA、还是应不应该申请某个工程学校的 Early Admission——这些问题往往是「我有一堆信息，但不知道怎么理清楚」。</p>
+          <p><strong>心法怎么用在这：</strong>把你的处境、顾虑、已知条件交代清楚（context），让 AI 帮你梳理出利弊框架，再对着它的输出认真 eval——哪些分析准，哪些它不了解你的实际情况。修正之后，决定权还是在你手里；AI 是帮你想清楚的对话板，不是替你拍板的人。</p>
+        </div>
+
+        <div class="box" style="border-radius:10px; padding:18px 16px">
+          <p class="box-title">📅 制定日程课表</p>
+          <p>O-level 备考期，学科多、deadline 撞，你需要一张真实可执行的复习表——不是那种看着漂亮但完全做不到的版本。</p>
+          <p><strong>心法怎么用在这：</strong>把你每天几点到几点空着、哪几科最弱、还剩多少周交代清楚（context）。让 AI 出一张草表（产出）。然后你 eval：这个安排我真的能执行吗？有没有漏掉 CCA 或者家庭时间？把对不上的地方指出来，让它修正。改两轮，出来的是一张你自己认账的表，不是 AI 自以为是的完美计划。</p>
+        </div>
+
+        <div class="box" style="border-radius:10px; padding:18px 16px">
+          <p class="box-title">🔍 生活问题 research 调查</p>
+          <p>你想买一个机械键盘、想了解新加坡大学工程学院的录取要求、或者只是想搞清楚某个你在 YouTube 上看到的机械原理——这些都是「需要在茫茫信息里找到自己真正想知道的」。</p>
+          <p><strong>心法怎么用在这：</strong>把你的问题和限制条件交代清楚（预算、用途、你已经知道什么、你不确定什么），让 AI 帮你快速梳理。eval 的核心是：它给的信息来源可靠吗？有没有把重要的细节漏掉？重要的决定，用 AI 缩小范围、最后还是自己去核实一手来源。</p>
+        </div>
+
+        <div class="box" style="border-radius:10px; padding:18px 16px">
+          <p class="box-title">📝 考试 profile 梳理与针对性复习</p>
+          <p>O-level 每科都有 syllabus 重点，但不是每个考点对你来说同样陌生。与其从头到尾刷笔记，不如先搞清楚「我的薄弱点是什么」。</p>
+          <p><strong>心法怎么用在这：</strong>把一科的 syllabus 主题和你自我评估的掌握程度交代给 AI（context），让它帮你生成一份「弱项清单」和针对性题目（产出）。eval 的时候你来打分：这道题真的戳到我的盲区了吗？还是它出的题太基础？修正反馈之后，让它出更有针对性的练习。这套流程可以跑在任何一科上。</p>
+        </div>
+
+        <div class="box" style="border-radius:10px; padding:18px 16px">
+          <p class="box-title">⚙️ 机械工程小项目探索</p>
+          <p>你对内燃机（internal combustion engine）、齿轮传动、或者某个你拆过的机械结构感兴趣——但学校里还没教到那个深度，你也不知道从哪里开始查。</p>
+          <p><strong>心法怎么用在这：</strong>把你想搞懂的机构和你目前的知识水平交代清楚（context），让 AI 给你一份「从这里开始学」的路线图和关键概念（产出）。eval 时你来判断：这个解释我真的看懂了吗？它举的例子和我见过的实物对得上吗？对不上的地方继续问，把一个工程概念真正弄懂——这比搜索引擎能给你更好的一来一往。你还可以把整理好的笔记沉淀进 <code>~/brain/mechanical/</code>，配合 Ch6 的第二大脑积累起来。</p>
+        </div>
+
+      </div>
+
+      <div class="box box-warn">
+        <p class="box-title">⚠️ 设想标注</p>
+        <p>以上五个场景均为「设想」——它们展示心法的迁移方向，不是有固定步骤的教程。你可以从任何一个开始尝试；也可能遇到 AI 答得不够准确的情况，这正是 eval 环节存在的理由。</p>
+      </div>
+
+      <h3>进阶想象：哥哥在玩的那一层（开开眼界用）</h3>
+      <div class="box box-core">
+        <p class="box-title">🧠 进阶想象 · 非教学重点，弟弟看看就好</p>
+        <p>这一条是给你开眼界用的，不是这本笔记要教的东西。</p>
+        <p>你哥（写这本笔记的人）在做一些更深一层的东西：把 AI 接入金融数据流，筛选<span class="term">量化信号（alpha signal）</span>、把券商数据（broker data）喂进 agent、让它给出针对个人 portfolio 的调仓建议。这类玩法需要懂一些数据科学（data science）的基础，也要接触真实的市场数据接口——不是一天学会的事。</p>
+        <p>同样的四步心法在这里转法是一样的：把数据、策略假设、验收标准交代清楚（context），跑出一套候选信号（产出），用历史数据回测来 eval，再修正参数。心法是一样的，门槛更高而已。</p>
+        <p><strong>为什么提这个：</strong>想让你看见同一套心法能走多远。你现在在 O-level 备考、在探索机械工程——等你哪天想往数据科学或者量化方向走，这条路是开着的，而且你已经有心法了。</p>
+      </div>
+
+      <div class="box box-summary">
+        <p class="box-title">小结 · 这本笔记就到这里了</p>
+        <p>九章走下来，你学了：LLM 和 agent 的区别（Ch0）、三层界面怎么选（Ch1）、命令行怎么不怕（Ch2）、Claude Code 怎么启动和对话（Ch3）、怎么给 AI 交代 context（Ch4）、怎么把笔记变成网页发到 GitHub Pages（Ch5）、怎么建第二大脑（Ch6）、MCP 和 skills 是什么（Ch7）、同类工具触类旁通（Ch8）。</p>
+        <p>但这些都只是练了同一件事：<strong>交代清楚 context → 产出 → eval 验收 → 修正</strong>。</p>
+        <p>往后不管遇到什么新工具、新任务、新场景，你只需要回到这四步。聪明的实习生永远在，但<strong>说清楚「要什么」、认真检查「做出来了没有」——始终是你的事</strong>。</p>
+      </div>
+    </section>
   </main>
   <script src="app.js" defer></script>
 </body>
