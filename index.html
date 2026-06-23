@@ -936,7 +936,40 @@ claude</code></pre>
         <p><strong>一句话回顾：</strong>第二大脑的本质是一个 <code>~/brain/</code> 文件夹——AI 当维护员，你负责提供素材和审阅，知识越积越厚，不会因为对话窗口关掉而消失。</p>
       </div>
     </section>
-    <section id="ch7" class="chapter"><h2>7 · MCP 与 Skills</h2></section>
+    <section id="ch7" class="chapter">
+      <h2>7 · 扩展能力：MCP 与 Skills</h2>
+
+      <p class="why"><strong>为什么要学这个：</strong>到现在，你用的是 Claude Code 自带的那一套工具——读文件、改文件、跑命令。这已经很强了。但假如你想让它读你的 Google 日历、连上某个数据库、或者把你常用的一套整理流程封装成一个命令随时调——那就需要"插件"了。这一章介绍两种扩展机制：<span class="term">MCP</span>（接外部系统的标准插头）和<span class="term">Skills</span>（把专长/流程打包成工具）。这章故意做得很轻——你不需要现在就用，只要知道"这东西存在、需要时可以加"就够了。</p>
+
+      <h3>MCP：AI 的 USB-C 接口</h3>
+      <p><span class="term">MCP（Model Context Protocol，模型上下文协议）</span>是一套开放标准，解决的是「AI 怎么统一连上外部工具和数据」这个问题。官方的定义是：<em>"an open-source standard for connecting AI applications to external systems"</em>（连接 AI 应用与外部系统的开源标准）。</p>
+      <p>官方给的比喻非常直白：<strong>MCP 就是 AI 的 USB-C 接口。</strong>就像 USB-C 统一了电子设备的连接规格，MCP 统一了「AI 插上外部系统」这件事的规格——不管对面是文件系统、数据库、搜索引擎还是你的 Google Calendar，都用同一套接法。Claude、ChatGPT、VSCode Copilot 等工具都支持这个标准，所以插一次、到处能用。</p>
+      <p>对你来说，MCP 的实际意义是：当你想让 Claude Code 做一件它自带工具做不到的事（比如直接读你的 Notion 页面），通常就是去找有没有对应的 MCP server 装上。</p>
+
+      <h3>Skills：把专长打包成一个命令</h3>
+      <p><span class="term">Skills（技能）</span>是把一套重复用的指令、流程或清单打包成一个随时可调的「专长」。官方说法是：<em>"Skills extend what Claude can do. Create a SKILL.md file with instructions, and Claude adds it to its toolkit."</em>（Skills 扩展 Claude 能做的事——写一个 SKILL.md 文件，Claude 就把它加进工具箱。）</p>
+      <p>什么时候该建一个 Skill？官方给了个很实在的判断标准：当你发现自己每次对话都在重复粘贴同一套指令，或者 CLAUDE.md 里某段「背景说明」已经长成了一套操作流程——那就该把它封装成 Skill 了。封装完，你可以直接用 <code>/技能名</code> 调它，或者让 Claude 在遇到对应情境时自动调用。Skills 遵循开放的 Agent Skills 标准，跨工具通用。</p>
+
+      <h3>顺便认识：Subagents 与 Hooks</h3>
+      <p><span class="term">Subagents（子智能体）</span>是在独立的上下文窗口里跑单项任务、只把结果汇报给主对话的专属助手——官方描述：<em>"specialized AI assistants that handle specific types of tasks"</em>，适合把「查资料、搜日志」这类会淹没主对话的侧任务交出去处理。</p>
+      <p><span class="term">Hooks（钩子）</span>是你写好、在 Claude Code 运行的特定节点自动触发的脚本——官方定义：<em>"user-defined shell commands, HTTP endpoints, or LLM prompts that execute automatically at specific points in Claude Code's lifecycle"</em>。典型用法：每次改完文件自动跑格式检查，或者拦截危险命令。</p>
+
+      <div class="box box-core">
+        <p class="box-title">🧠 理念：按需添加，别一上来堆一堆</p>
+        <p>MCP、Skills、Subagents、Hooks——这些都是扩展层，不是必须一开始就配齐的。实习生能把活干完，你再给他多一件工具；工具还没用到就先搬一堆进来，反而乱。<strong>遇到自带工具做不到的事，再去找对应的扩展——这才是正确的节奏。</strong>现在知道「这东西存在」就够了，需要时翻官方文档加上去就行。</p>
+      </div>
+
+      <div class="box box-summary">
+        <p class="box-title">小结</p>
+        <ul>
+          <li><strong>MCP</strong>：AI 的 USB-C 接口——统一规格，让 Claude 连上任意外部系统（文件、数据库、日历……）。</li>
+          <li><strong>Skills</strong>：把重复用的指令/流程打包成一个可随时调用的「专长」，放进 <code>.claude/skills/</code>。</li>
+          <li><strong>Subagents</strong>：专门处理侧任务的子智能体，跑在独立上下文里，只汇报结果。</li>
+          <li><strong>Hooks</strong>：在 Claude Code 的特定节点自动触发的脚本，用来自动化和把关。</li>
+        </ul>
+        <p><strong>一句话回顾：</strong>这四件东西都是「需要时插上去的扩展」——现在不用急着学怎么配，知道它们存在、遇到瓶颈时知道往哪找，就是这章的全部目标。</p>
+      </div>
+    </section>
     <section id="ch8" class="chapter"><h2>8 · 触类旁通：其他 harness</h2></section>
     <section id="ch9" class="chapter"><h2>9 · 用例画廊</h2></section>
   </main>
