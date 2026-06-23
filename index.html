@@ -379,7 +379,103 @@ rm ~/study/physics-notes/raw/2026-week3-bak.md</code></pre>
         <p><strong>一句话回顾：</strong>terminal 是你和 Claude Code 共同工作的地盘——学会"看懂它在哪、看懂它在做什么"，比背命令更重要；下一章直接开进 Claude Code。</p>
       </div>
     </section>
-    <section id="ch3" class="chapter"><h2>3 · 上手 Claude Code</h2></section>
+    <section id="ch3" class="chapter">
+      <h2>3 · 上手 Claude Code</h2>
+
+      <p class="why"><strong>为什么要学这个：</strong>上一章你已经认识了 terminal、建好了 <code>~/study/physics-notes/</code>，还在 <code>raw/2026-week3.md</code> 里写下了第一行 Physics 笔记。上上章（第 1 层 claude.ai 网页）帮你探过一次这份笔记——那是「问一句、答一段」，窗口关了什么都不剩。第 2 层 Claude Cowork 能让你零命令行就动本地文件，已经是一大步。但要把笔记变成一个真正能<strong>发布到 GitHub Pages 的网页</strong>、能用 git 管版本、能批量自动化处理，就需要毕业到<strong>第 3 层 · Claude Code</strong>：在 terminal 里运行、完全掌控你的文件系统、可编程、可维护、可发布上线。这一章就带你把它装好、登录、跑起来。</p>
+
+      <h3>harness 是什么</h3>
+      <p>Claude Code 官方文档有一句定义值得记住：</p>
+      <blockquote style="border-left:3px solid var(--core); margin:12px 0; padding:8px 12px; color:var(--muted); font-style:italic">"Claude Code serves as the <strong>agentic harness</strong> around Claude: it provides the tools, context management, and execution environment that turn a language model into a capable coding agent."</blockquote>
+      <p><span class="term">Agentic harness（工作台 / 套具）</span>——把模型想成一颗大脑，harness 就是把这颗大脑接上工具、让它真正能在你电脑里动手的整套框架。没有 harness，模型只能返回文字；有了 harness，它就能读文件、改文件、运行命令、看输出、再决定下一步。</p>
+      <p>一句话点清两者的区别：<strong>Cowork 和 Claude Code 用的是同一套 agentic 引擎</strong>——Cowork 住在桌面 App 里、零 terminal、鼠标点点就能动你的本地文件；Claude Code 住在 terminal 里、完全掌控、能跑任何命令。同一个大脑，工作台不同，能做的事就不同。</p>
+
+      <h3>Claude Code 的 agentic loop：读→想→动手→再读</h3>
+      <p>你下达一个任务之后，Claude Code 不是一次性甩给你答案，而是进入一个循环——官方叫它三阶段（gather context → take action → verify results），映射到你能感受到的节奏就是：</p>
+      <div style="border:1px solid var(--rule); border-radius:10px; padding:18px 16px; margin:18px 0; background:#fff">
+        <div style="display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; justify-content:center; text-align:center; font-size:15px">
+          <div style="flex:1 1 110px; min-width:100px; border:2px solid var(--link); border-radius:8px; padding:10px 8px; background:#edf2fb">
+            <strong>① 读</strong><br><span style="color:var(--muted); font-size:13px">gather context<br>读你的文件和问题</span>
+          </div>
+          <div style="align-self:center; color:var(--muted); font-weight:700">→</div>
+          <div style="flex:1 1 110px; min-width:100px; border:2px solid var(--core); border-radius:8px; padding:10px 8px; background:var(--core-bg)">
+            <strong>② 想</strong><br><span style="color:var(--muted); font-size:13px">（内部推理）<br>决定下一步怎么做</span>
+          </div>
+          <div style="align-self:center; color:var(--muted); font-weight:700">→</div>
+          <div style="flex:1 1 110px; min-width:100px; border:2px solid var(--do); border-radius:8px; padding:10px 8px; background:var(--do-bg)">
+            <strong>③ 动手</strong><br><span style="color:var(--muted); font-size:13px">take action<br>改文件/跑命令</span>
+          </div>
+          <div style="align-self:center; color:var(--muted); font-weight:700">→</div>
+          <div style="flex:1 1 110px; min-width:100px; border:2px solid var(--warn); border-radius:8px; padding:10px 8px; background:var(--warn-bg)">
+            <strong>④ 再读</strong><br><span style="color:var(--muted); font-size:13px">verify results<br>看结果、判断够不够</span>
+          </div>
+        </div>
+        <p style="text-align:center; color:var(--muted); margin:12px 0 0; font-size:14px">④ 之后带着新结果回到 ① ，圈越转越近目标 ↻　任务完成才停下来</p>
+      </div>
+      <p>注意：这个循环是 Claude Code 自己在跑的——但<strong>你</strong>在 ④ 阶段要和它一起做「verify」：看它改了什么、判断对不对，必要时叫停或纠正。agent 的循环和你的四步闭环（Ch0 心法）在这里合体。</p>
+
+      <div class="box box-warn">
+        <p class="box-title">⚠️ 成本 / 权限 · 用之前先看这里</p>
+        <p><strong>Free 档不包含 Claude Code。</strong>官方原文说得很清楚："The free Claude.ai plan does not include Claude Code access."</p>
+        <p><strong>最低可行选项是 Pro 档：</strong>$17 / 月（年付）或 $20 / 月（月付）。官方定价页列出 Pro 档 "Includes Claude Code"。</p>
+        <p><strong>没有个人学生折扣。</strong>官方定价页有一个 Education plan，但那是给大学机构整体采购的（"a comprehensive university-wide plan for an institution"），不是学生个人可以直接购买的低价档位。当前没有已核实的个人学生折扣。</p>
+        <p><strong>Cowork 和 Claude Code 共享同一个订阅。</strong>Team 档官方原文："Includes Claude Code and Claude Cowork"——订了 Pro / Max / Team，两者同时覆盖，不需要再多付。</p>
+        <p>（以上定价来源：claude.com/pricing，2026-06-23 核实。）</p>
+      </div>
+
+      <div class="box box-do">
+        <p class="box-title">🙌 跟我做 · 安装 Claude Code</p>
+        <p><strong>系统要求：</strong>macOS 13.0 以上、至少 4 GB 内存、联网。（你的 Mac 应该符合，继续。）</p>
+        <p><strong>第一步：运行安装脚本</strong>（把下面这行整行复制进 terminal，按 Return）：</p>
+        <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
+        <p>这是官方 Native Install 方式——它会自动帮你装好、以后也会在后台自动更新。（如果你已经装了 Homebrew，也可以用 <code>brew install --cask claude-code</code>，但那个方式不会自动更新，需要你手动 <code>brew upgrade claude-code</code>。）</p>
+        <p><strong>第二步：验证安装成功</strong></p>
+        <pre><code>claude --version</code></pre>
+        <p>看到版本号输出（如 <code>claude 1.x.x</code> 之类）就说明装好了。如果提示找不到命令，关掉 terminal 重新开一个再试。</p>
+        <p><strong>第三步：首次登录</strong></p>
+        <pre><code>claude</code></pre>
+        <p>首次运行会弹出浏览器，让你用 Claude 账号登录。按提示完成后，credentials 会存在本地，之后不需要每次登录。确认你的账号是 Pro 或以上档位——Free 账号到这一步会提示无权限。</p>
+      </div>
+
+      <div class="box box-do">
+        <p class="box-title">🙌 跟我做 · 进项目目录，开第一次对话</p>
+        <p><strong>第四步：进入 Physics 笔记 workspace</strong>（Ch2 你已经建好了这个目录）：</p>
+        <pre><code>cd ~/study/physics-notes</code></pre>
+        <p><strong>第五步：启动 Claude Code，开始对话</strong></p>
+        <pre><code>claude</code></pre>
+        <p>进入交互界面之后，你会看到一个提示符，等你说话。试着先打一句话让它帮你确认环境：</p>
+        <pre><code>你现在在哪个目录？帮我列出这里有什么文件</code></pre>
+        <p>Claude Code 会自动读取当前目录、列出文件——你刚刚完成了第一次 agent 对话。退出按 <code>Ctrl + C</code> 或者输入 <code>/exit</code>。</p>
+      </div>
+
+      <h3>主线示例①第一段：让 Claude Code 整理你的 Physics 笔记</h3>
+      <p>前面几章你在 Ch2 建好了 <code>~/study/physics-notes/raw/2026-week3.md</code>，里面有一行笔记起点。现在让 Claude Code 来读它、整理它——这是主线示例①的第一步（后面 Ch5 会把整理结果转成 HTML，然后发到 GitHub Pages）。</p>
+      <p>在 <code>~/study/physics-notes</code> 目录里运行 <code>claude</code> 启动对话，然后把下面这段作为你的第一条指令（注意：把 context 交代清楚，这是 Ch0 心法）：</p>
+      <pre><code>我在学 Physics（O-level 水平），raw/2026-week3.md 是我本周的课堂笔记，可能有些乱。请帮我读一下这个文件，然后把内容整理成条理清晰的 Markdown 格式——保留原来的公式和知识点，但让结构更好读。整理好后保存回同一个文件。</code></pre>
+      <p>Claude Code 会依次经历那四步 loop：<strong>读</strong>（打开 <code>raw/2026-week3.md</code>）→ <strong>想</strong>（决定怎么整理）→ <strong>动手</strong>（改写文件内容）→ <strong>再读</strong>（确认写入成功）。</p>
+      <p>它动手前通常会告诉你它打算做什么、并请求你确认（这是 Claude Code 的默认安全行为）。你看一下计划、觉得没问题就确认，觉得哪里不对就在确认前说出来。</p>
+      <p>它做完之后，你用 <code>cat raw/2026-week3.md</code> 或者直接在 Finder 里打开，验收整理结果对不对——<strong>这就是你的 eval 步骤</strong>。如果结构还不够好，继续在对话里说："第二节可以再细化一下"，它会接着改。</p>
+
+      <div class="box box-core">
+        <p class="box-title">🧠 心法回扣 · 你负责 context 和 eval</p>
+        <p>刚才那条指令之所以好用，因为它交代了三件事：你是谁（Physics 学生）、材料在哪（<code>raw/2026-week3.md</code>）、你想要什么（整理成条理清晰的 Markdown）。这就是 Ch0 说的「交代清楚 context」。</p>
+        <p>Claude Code 在 agentic loop 里自己做「verify results」；但「<strong>这个结果是不是你真正想要的</strong>」——那个 eval，是你的事，不能外包给它。它整理好了，你开文件看一眼，才算真正走完一圈。</p>
+        <p><strong>四步闭环：你给 context → 它动手 → 你 eval → 你给反馈让它改。</strong></p>
+      </div>
+
+      <div class="box box-summary">
+        <p class="box-title">小结</p>
+        <ul>
+          <li><strong>Claude Code = agentic harness：</strong>把 Claude 大脑接上工具、接上你的文件系统和命令执行能力，让它真正能在 terminal 里帮你干活。</li>
+          <li><strong>Cowork vs Claude Code：</strong>同一套引擎，Cowork 是桌面 App / 零 terminal，Claude Code 是 terminal / 完全掌控 / 可发布。</li>
+          <li><strong>安装：</strong><code>curl -fsSL https://claude.ai/install.sh | bash</code>（macOS 13+，4GB RAM）；验证：<code>claude --version</code>；登录：<code>claude</code> 首次运行按浏览器提示。</li>
+          <li><strong>成本：</strong>最低 Pro 档 $17/月（年付）；无个人学生折扣；Cowork 与 Claude Code 共享同一订阅。</li>
+          <li><strong>Agentic loop：读 → 想 → 动手 → 再读</strong>，它自己转；你在"再读"这步和它一起验收，出问题叫停。</li>
+          <li>主线示例①第一段已跑通：<code>raw/2026-week3.md</code> 交给 Claude Code 整理，Ch5 再把它变成 HTML 发到 GitHub Pages。</li>
+        </ul>
+        <p><strong>一句话回顾：</strong>Claude Code 是你 terminal 里的 agent，装好、登录、cd 进项目目录、说清楚你要什么——它就开始在 agentic loop 里帮你动手；你的活是交代 context 和做 eval。</p>
+      </div>
+    </section>
     <section id="ch4" class="chapter"><h2>4 · 把心法用熟</h2></section>
     <section id="ch5" class="chapter"><h2>5 · 让产出沉淀</h2></section>
     <section id="ch6" class="chapter"><h2>6 · 第二大脑</h2></section>
